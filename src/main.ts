@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+import { Transform } from 'class-transformer';
 import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
@@ -9,7 +10,7 @@ async function bootstrap() {
     whitelist: true,
     transform: true
   }))
-
+  
   await app.listen(3000);
 }
 bootstrap();
