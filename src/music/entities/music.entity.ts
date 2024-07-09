@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Music {
@@ -13,5 +13,14 @@ export class Music {
 
     @Column({ type: 'int' })
     duration: number;
+
+    @CreateDateColumn()
+    createdAt:Date;
+
+    @CreateDateColumn()
+    updatedAt: Date;
+
+    @CreateDateColumn()
+    deletedAt: Date;
 
 }
