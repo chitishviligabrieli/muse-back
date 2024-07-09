@@ -10,19 +10,19 @@ export class MusicRepository {
     constructor(@InjectRepository(Music)
     private readonly musicRepository: Repository<Music>) { }
 
-    create(data: CreateMusicDto) {
+    async create(data: CreateMusicDto) {
         const newProduct = this.musicRepository.create(data)
-        return this.musicRepository.save(newProduct)
+        await this.musicRepository.save(newProduct)
     }
 
-    findAll() {
-        return this.musicRepository
+    async findAll() {
+        await this.musicRepository
             .createQueryBuilder('music')
             .getMany()
     }
 
-    findOne(id: number) {
-        return this.musicRepository
+    async findOne(id: number) {
+        await this.musicRepository
             .createQueryBuilder('music')
             .where('music.id= :id', { id })
             .getOne()
@@ -36,13 +36,13 @@ export class MusicRepository {
             .where('music.id = :id', { id })
             .execute()
 
-        return this.musicRepository.findOneBy({ id })
+        await this.musicRepository.findOneBy({ id })
     }
 
     async remove(id: number) {
         await this.musicRepository.softDelete(id)
 
-        return this.musicRepository
+        await this.musicRepository
             .createQueryBuilder('music')
             .withDeleted()
             .where('category.id = :id', { id })
