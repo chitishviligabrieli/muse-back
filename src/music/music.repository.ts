@@ -32,7 +32,7 @@ export class MusicRepository {
         await this.musicRepository
             .createQueryBuilder('music')
             .update()
-            .set(UpdateMusicDto)
+            .set(data)
             .where('music.id = :id', { id })
             .execute()
 

@@ -25,6 +25,6 @@ export class MusicService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} music`;
+    return this.musicRepository.remove(id);
   }
 }

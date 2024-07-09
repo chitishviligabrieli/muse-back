@@ -4,6 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Music } from './music/entities/music.entity';
 import { MusicModule } from './music/music.module';
+import { AlbumModule } from './album/album.module';
 
 @Module({
   imports: [TypeOrmModule.forRoot({
@@ -15,7 +16,7 @@ import { MusicModule } from './music/music.module';
     autoLoadEntities: true,
     synchronize: true,
     type: 'mysql'
-  }), MusicModule],
+  }), MusicModule, AlbumModule],
   controllers: [AppController],
   providers: [AppService],
 })
