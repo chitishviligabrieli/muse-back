@@ -9,7 +9,7 @@ export class MusicService {
   constructor(private readonly musicRepository: MusicRepository) { }
 
   async create(createMusicDto: CreateMusicDto) {
-    return this.musicRepository.create(createMusicDto);
+    return await this.musicRepository.create(createMusicDto);
   }
 
   async findAll() {

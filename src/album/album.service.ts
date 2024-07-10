@@ -10,7 +10,7 @@ export class AlbumService {
 
 
   async create(createMusicDto: CreateAlbumDto) {
-    return this.albumRepository.create(createMusicDto);
+    return await this.albumRepository.create(createMusicDto);
   }
 
   async findAll() {
