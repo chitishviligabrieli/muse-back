@@ -28,11 +28,11 @@ export class MusicRepository {
             .getOne()
     }
 
-    async update(id: number, data: UpdateMusicDto) {
+    async update(id: number, updateMusicDto: UpdateMusicDto) {
         await this.musicRepository
             .createQueryBuilder('music')
             .update()
-            .set(data)
+            .set(updateMusicDto)
             .where('music.id = :id', { id })
             .execute()
 

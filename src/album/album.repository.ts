@@ -1,14 +1,14 @@
 import { Injectable } from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
-import { Album } from "./entities/album.entity";
+import { AlbumEntity } from "./entities/album.entity";
 import { Repository } from "typeorm";
 import { UpdateAlbumDto } from "./dto/update-album.dto";
 import { CreateAlbumDto } from "./dto/create-album.dto";
 
 @Injectable()
 export class AlbumRepository {
-    constructor(@InjectRepository(Album)
-    private readonly albumRepository: Repository<Album>) { }
+    constructor(@InjectRepository(AlbumEntity)
+    private readonly albumRepository: Repository<AlbumEntity>) { }
 
     async create(createAlbumDto: CreateAlbumDto) {
         const newProduct = this.albumRepository.create(createAlbumDto)
@@ -28,11 +28,11 @@ export class AlbumRepository {
             .getOne()
     }
 
-    async update(id: number, data: UpdateAlbumDto) {
+    async update(id: number, updateAlbumDto: UpdateAlbumDto) {
         await this.albumRepository
             .createQueryBuilder('album')
             .update()
-            .set(data)
+            .set(updateAlbumDto)
             .where('album.id = :id', { id })
             .execute()
 

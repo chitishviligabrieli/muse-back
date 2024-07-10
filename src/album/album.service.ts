@@ -9,23 +9,23 @@ export class AlbumService {
   constructor(private readonly albumRepository: AlbumRepository) { }
 
 
-  create(createMusicDto: CreateAlbumDto) {
+  async create(createMusicDto: CreateAlbumDto) {
     return this.albumRepository.create(createMusicDto);
   }
 
-  findAll() {
-    return this.albumRepository.findAll()
+  async findAll() {
+    return await this.albumRepository.findAll()
   }
 
-  findOne(id: number) {
-    return this.albumRepository.findOne(id);
+  async findOne(id: number) {
+    return await this.albumRepository.findOne(id);
   }
 
-  update(id: number, updateAlbumDto: UpdateAlbumDto) {
-    return this.albumRepository.update(id, updateAlbumDto);
+  async update(id: number, updateAlbumDto: UpdateAlbumDto) {
+    return await this.albumRepository.update(id, updateAlbumDto);
   }
 
-  remove(id: number) {
-    return this.albumRepository.remove(id);
+  async remove(id: number) {
+    return await this.albumRepository.remove(id);
   }
 }
