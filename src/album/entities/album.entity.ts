@@ -2,7 +2,7 @@ import { CreateMusicDto } from "src/music/dto/create-music.dto";
 import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
 
 @Entity()
-export class Album {
+export class AlbumEntity {
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -13,7 +13,7 @@ export class Album {
     @Column({ type: 'timestamp' })
     releaseDate: string;
 
-    @Column({ type: 'array' })
+    @Column({ type: 'simple-array' })
     musics: CreateMusicDto[]
 
     @Column({ type: 'int' })
