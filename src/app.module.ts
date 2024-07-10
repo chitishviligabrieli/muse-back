@@ -2,10 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ArtistModule } from './artist/artist.module';
-import { ArtistRepository } from './artist/artist.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Music } from './music/entities/music.entity';
 import { MusicModule } from './music/music.module';
+import { AlbumModule } from './album/album.module';
 
 @Module({
   imports: [
@@ -20,7 +19,8 @@ import { MusicModule } from './music/music.module';
       type: 'mysql'
     }),
     ArtistModule,
-    MusicModule
+    MusicModule,
+    AlbumModule
   ],
   controllers: [AppController],
   providers: [AppService],
