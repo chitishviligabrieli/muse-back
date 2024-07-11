@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
 
 @Entity()
-export class Artist {
+export class ArtistEntity {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -16,4 +16,13 @@ export class Artist {
 
     @Column()
     biography: string;
+
+    @CreateDateColumn()
+    createdAt:Date;
+
+    @CreateDateColumn()
+    updatedAt: Date;
+
+    @CreateDateColumn()
+    deletedAt: Date;
 }
