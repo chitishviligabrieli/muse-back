@@ -6,7 +6,8 @@ import { AlbumRepository } from './album.repository';
 @Injectable()
 export class AlbumService {
 
-  constructor(private readonly albumRepository: AlbumRepository) { }
+  constructor(private readonly albumRepository: AlbumRepository) {
+  }
 
 
   async create(createMusicDto: CreateAlbumDto) {
@@ -14,7 +15,7 @@ export class AlbumService {
   }
 
   async findAll() {
-    return await this.albumRepository.findAll()
+    return await this.albumRepository.findAll();
   }
 
   async findOne(id: number) {

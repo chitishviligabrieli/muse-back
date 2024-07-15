@@ -9,12 +9,12 @@ export class CreateArtistDto {
     @IsString()
     @IsNotEmpty()
     lastName: string;
-  
+
     @IsArray()
     @ArrayNotEmpty()
     @IsUrl({}, { each: true })
     musics: string[];
-  
+
     @IsString()
     @IsNotEmpty()
     biography: string;

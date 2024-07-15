@@ -10,17 +10,17 @@ import { AlbumModule } from './album/album.module';
   imports: [
     TypeOrmModule.forRoot({
       port: 3306,
-      host: '127.0.0.1',
+      host: 'localhost',
       username: 'root',
-      password: '123456',
-      database: 'music-app',
+      password: 'gabr12ieli34',
+      database: 'muse-back',
       autoLoadEntities: true,
       synchronize: true,
-      type: 'mysql'
+      type: 'mysql',
     }),
     ArtistModule,
     MusicModule,
-    AlbumModule
+    AlbumModule,
   ],
   controllers: [AppController],
   providers: [AppService],
