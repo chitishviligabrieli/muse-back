@@ -1,26 +1,39 @@
-import { Column, CreateDateColumn, Entity, PrimaryGeneratedColumn } from "typeorm";
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
+import { AlbumEntity } from '../../album/entities/album.entity';
+
 
 @Entity()
 export class MusicEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: 'varchar' })
-    name: string;
+  @Column({ type: 'varchar' })
+  name: string;
 
-    @Column({ type: 'varchar' })
-    artistId: number;
+  @Column({ type: 'varchar' })
+  artistId: number;
 
-    @Column({ type: 'int' })
-    duration: number;
+  @Column({ type: 'int' })
+  duration: number;
 
-    @CreateDateColumn()
-    createdAt:Date;
+  @ManyToOne(() => AlbumEntity, (album) => album.music)
+  @JoinColumn({ name: 'albumId' })
+  album:AlbumEntity[];
 
-    @CreateDateColumn()
-    updatedAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @CreateDateColumn()
-    deletedAt: Date;
+  @CreateDateColumn()
+  updatedAt: Date;
+
+  @CreateDateColumn()
+  deletedAt: Date;
 
 }
