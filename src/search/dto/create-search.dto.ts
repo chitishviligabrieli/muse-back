@@ -1,25 +1,6 @@
-import { IsOptional, IsString } from 'class-validator';
+import { IsString } from 'class-validator';
 
-export class SearchMusicDto {
-  @IsOptional()
+export class CreateSearchDto {
   @IsString()
-  name?: string;
-
-  @IsOptional()
-  @IsString()
-  artistName?: string;
-}
-
-export class SearchArtistDto {
-  @IsOptional()
-  @IsString()
-  firstName?: string;
-
-  @IsOptional()
-  @IsString()
-  lastName?: string;
-
-  @IsOptional()
-  @IsString()
-  music?: string;
+  value: string;
 }

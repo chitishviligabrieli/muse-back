@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    CreateDateColumn,
+    OneToMany,
+    DeleteDateColumn,
+} from 'typeorm';
+import { AlbumEntity } from '../../album/entities/album.entity';
+
 
 @Entity()
 export class ArtistEntity {
@@ -11,16 +20,16 @@ export class ArtistEntity {
     @Column()
     lastName: string;
 
-    @Column({type: "simple-array"})
-    musics: string[];
-
     @Column()
     biography: string;
-    
-    @CreateDateColumn()
-    createdAt: Date;
 
-    @UpdateDateColumn()
+    @OneToMany(() => AlbumEntity, (album) => album.artist)
+    album: AlbumEntity[];
+
+    @CreateDateColumn()
+    createdAt:Date;
+
+    @CreateDateColumn()
     updatedAt: Date;
 
     @DeleteDateColumn()
