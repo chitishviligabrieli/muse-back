@@ -3,7 +3,7 @@ import { MusicEntity } from "./entities/music.entity";
 import { CreateMusicDto } from "./dto/create-music.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UpdateMusicDto } from "./dto/update-music.dto";
-import { Injectable } from '@nestjs/common';
+import { Injectable, Search } from '@nestjs/common';
 
 @Injectable()
 export class MusicRepository {
@@ -13,6 +13,13 @@ export class MusicRepository {
   async create(data: CreateMusicDto) {
     const newProduct = this.musicRepository.create(data);
       return await this.musicRepository.save(newProduct);
+  }
+
+  async searchMusic(value: string): Promise<MusicEntity[]> {
+    return this.musicRepository
+      .createQueryBuilder('music')
+      .where('music.name LIKE :value', { value: `%${value}%` })
+      .getMany();
   }
 
   async findAll() {
@@ -29,7 +36,7 @@ export class MusicRepository {
   }
 
   async update(id: number, updateMusicDto: UpdateMusicDto) {
-    return await this.musicRepository
+     await this.musicRepository
       .createQueryBuilder('music')
       .update()
       .set(updateMusicDto)
@@ -40,7 +47,7 @@ export class MusicRepository {
   }
 
   async remove(id: number) {
-    return await this.musicRepository.softDelete(id);
+     await this.musicRepository.softDelete(id);
 
     return await this.musicRepository
       .createQueryBuilder('music')

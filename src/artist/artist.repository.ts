@@ -12,6 +12,15 @@ export class ArtistRepository {
     private readonly artistRepository: Repository<ArtistEntity>,
   ) {}
 
+  async searchArtists(value: string): Promise<ArtistEntity[]> {
+    return this.artistRepository
+      .createQueryBuilder('artist')
+      .where('artist.firstName LIKE :value', { value: `%${value}%` })
+      .orWhere('artist.lastName LIKE :value', { value: `%${value}%` })
+      .orWhere('artist.biography LIKE :value', { value: `%${value}%` })
+      .getMany();
+  }
+
   async create(data: CreateArtistDto): Promise<ArtistEntity> {
     const newArtist = this.artistRepository.create(data);
     return await this.artistRepository.save(newArtist);

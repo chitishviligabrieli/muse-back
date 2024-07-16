@@ -1,41 +1,24 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+
 import { CreateSearchDto } from './dto/create-search.dto';
-import { ArtistEntity } from 'src/artist/entities/artist.entity';
-import { MusicEntity } from 'src/music/entities/music.entity';
-import { AlbumEntity } from 'src/album/entities/album.entity';
+import { ArtistRepository } from 'src/artist/artist.repository';
+import { AlbumRepository } from 'src/album/album.repository';
+import { MusicRepository } from 'src/music/music.repository';
+
 
 @Injectable()
 export class SearchService {
   constructor(
-    @InjectRepository(ArtistEntity)
-    private artistRepository: Repository<ArtistEntity>,
-
-    @InjectRepository(AlbumEntity)
-    private albumRepository: Repository<AlbumEntity>,
-
-    @InjectRepository(MusicEntity)
-    private musicRepository: Repository<MusicEntity>,
+    private readonly artistRepository: ArtistRepository,
+    private readonly albumRepository: AlbumRepository,
+    private readonly musicRepository: MusicRepository,
   ) {}
 
   async search({ value }: CreateSearchDto) {
-    const artists = await this.artistRepository
-      .createQueryBuilder('artist')
-      .where('artist.firstName LIKE :value', { value: `%${value}%` })
-      .orWhere('artist.lastName LIKE :value', { value: `%${value}%` })
-      .orWhere('artist.biography LIKE :value', { value: `%${value}%` })
-      .getMany();
-
-    const albums = await this.albumRepository
-      .createQueryBuilder('album')
-      .where('album.title LIKE :value', { value: `%${value}%` })
-      .getMany();
-
-    const music = await this.musicRepository
-      .createQueryBuilder('music')
-      .where('music.name LIKE :value', { value: `%${value}%` })
-      .getMany();
+    const artists = await this.artistRepository.searchArtists(value);
+    const albums = await this.albumRepository.searchAlbums(value);
+    const music = await this.musicRepository.searchMusic(value);
 
     return { artists, albums, music };
   }
