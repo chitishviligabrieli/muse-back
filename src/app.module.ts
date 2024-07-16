@@ -5,6 +5,7 @@ import { ArtistModule } from './artist/artist.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MusicModule } from './music/music.module';
 import { AlbumModule } from './album/album.module';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [

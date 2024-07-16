@@ -1,5 +1,14 @@
-import { CreateMusicDto } from "src/music/dto/create-music.dto";
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from "typeorm";
+import {
+    Column,
+    CreateDateColumn,
+    DeleteDateColumn,
+    Entity, JoinColumn,
+    ManyToOne, OneToMany,
+    PrimaryGeneratedColumn,
+    UpdateDateColumn,
+} from 'typeorm';
+import { ArtistEntity } from '../../artist/entities/artist.entity';
+import { MusicEntity } from '../../music/entities/music.entity';
 
 @Entity()
 export class AlbumEntity {
@@ -13,17 +22,21 @@ export class AlbumEntity {
     @Column({ type: 'timestamp' })
     releaseDate: string;
 
-    @Column({ type: 'simple-array' })
-    musics: CreateMusicDto[]
-
     @Column({ type: 'int' })
     artistId: number;
+
+    @OneToMany(() => MusicEntity, (music) => music.album)
+    music:MusicEntity[];
+
+    @ManyToOne(() => ArtistEntity, (artist) => artist.album)
+    @JoinColumn({ name: 'artistId' })
+    artist:ArtistEntity[];
 
     @CreateDateColumn()
     createdAt: Date;
 
     @UpdateDateColumn()
-    updaredAt: Date;
+    updatedAt: Date;
 
     @DeleteDateColumn()
     deletedAt: Date;

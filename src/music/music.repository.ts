@@ -1,15 +1,14 @@
+import { Repository } from "typeorm";
+import { MusicEntity } from "./entities/music.entity";
+import { CreateMusicDto } from "./dto/create-music.dto";
+import { InjectRepository } from "@nestjs/typeorm";
+import { UpdateMusicDto } from "./dto/update-music.dto";
 import { Injectable } from '@nestjs/common';
-import { Repository } from 'typeorm';
-import { MusicEntity } from './entities/music.entity';
-import { CreateMusicDto } from './dto/create-music.dto';
-import { InjectRepository } from '@nestjs/typeorm';
-import { UpdateMusicDto } from './dto/update-music.dto';
 
 @Injectable()
 export class MusicRepository {
   constructor(@InjectRepository(MusicEntity)
-              private readonly musicRepository: Repository<MusicEntity>) {
-  }
+              private readonly musicRepository: Repository<MusicEntity>) { }
 
   async create(data: CreateMusicDto) {
     const newProduct = this.musicRepository.create(data);
