@@ -4,6 +4,7 @@ import {
     Column,
     CreateDateColumn,
     OneToMany,
+    DeleteDateColumn,
 } from 'typeorm';
 import { AlbumEntity } from '../../album/entities/album.entity';
 
@@ -31,6 +32,6 @@ export class ArtistEntity {
     @CreateDateColumn()
     updatedAt: Date;
 
-    @CreateDateColumn()
+    @DeleteDateColumn()
     deletedAt: Date;
 }

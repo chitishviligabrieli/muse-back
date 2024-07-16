@@ -4,24 +4,25 @@ import { AppService } from './app.service';
 import { ArtistModule } from './artist/artist.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MusicModule } from './music/music.module';
-import { AlbumModule } from './album/album.module';
 import { SearchModule } from './search/search.module';
+import { AlbumModule } from './album/album.module';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot({
       port: 3306,
-      host: 'localhost',
+      host: '127.0.0.1',
       username: 'root',
-      password: 'gabr12ieli34',
-      database: 'muse-back',
+      password: '123456',
+      database: 'music-app',
       autoLoadEntities: true,
       synchronize: true,
-      type: 'mysql',
+      type: 'mysql'
     }),
     ArtistModule,
     MusicModule,
-    AlbumModule,
+    SearchModule,
+    AlbumModule
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -19,7 +19,7 @@ export class AlbumEntity {
     @Column({ type: 'varchar' })
     title: string;
 
-    @Column({ type: 'timestamp' })
+    @Column({ type: 'varchar' })
     releaseDate: string;
 
     @Column({ type: 'int' })

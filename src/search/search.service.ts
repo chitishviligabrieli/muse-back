@@ -1,26 +1,25 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+
 import { CreateSearchDto } from './dto/create-search.dto';
-import { UpdateSearchDto } from './dto/update-search.dto';
+import { ArtistRepository } from 'src/artist/artist.repository';
+import { AlbumRepository } from 'src/album/album.repository';
+import { MusicRepository } from 'src/music/music.repository';
+
 
 @Injectable()
 export class SearchService {
-  create(createSearchDto: CreateSearchDto) {
-    return 'This action adds a new search';
-  }
+  constructor(
+    private readonly artistRepository: ArtistRepository,
+    private readonly albumRepository: AlbumRepository,
+    private readonly musicRepository: MusicRepository,
+  ) {}
 
-  findAll() {
-    return `This action returns all search`;
-  }
+  async search({ value }: CreateSearchDto) {
+    const artists = await this.artistRepository.searchArtists(value);
+    const albums = await this.albumRepository.searchAlbums(value);
+    const music = await this.musicRepository.searchMusic(value);
 
-  findOne(id: number) {
-    return `This action returns a #${id} search`;
-  }
-
-  update(id: number, updateSearchDto: UpdateSearchDto) {
-    return `This action updates a #${id} search`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} search`;
+    return { artists, albums, music };
   }
 }

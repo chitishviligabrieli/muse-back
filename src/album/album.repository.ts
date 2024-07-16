@@ -11,6 +11,13 @@ export class AlbumRepository {
               private readonly albumRepository: Repository<AlbumEntity>) {
   }
 
+  async searchAlbums(value: string): Promise<AlbumEntity[]> {
+    return this.albumRepository
+    .createQueryBuilder('album')
+      .where('album.title LIKE :value', { value: `%${value}%` })
+      .getMany();
+  }
+
   async create(createAlbumDto: CreateAlbumDto) {
     const newProduct = this.albumRepository.create(createAlbumDto);
     return await this.albumRepository.save(newProduct);
@@ -30,7 +37,7 @@ export class AlbumRepository {
   }
 
   async update(id: number, updateAlbumDto: UpdateAlbumDto) {
-    return await this.albumRepository
+    await this.albumRepository
       .createQueryBuilder('album')
       .update()
       .set(updateAlbumDto)
@@ -41,7 +48,7 @@ export class AlbumRepository {
   }
 
   async remove(id: number) {
-    return await this.albumRepository.softDelete(id);
+   await this.albumRepository.softDelete(id);
 
     return await this.albumRepository
       .createQueryBuilder('album')
