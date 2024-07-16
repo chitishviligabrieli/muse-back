@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
 
 @Entity()
 export class ArtistEntity {
@@ -11,18 +11,18 @@ export class ArtistEntity {
     @Column()
     lastName: string;
 
-    @Column({type:"simple-array"})
+    @Column({type: "simple-array"})
     musics: string[];
 
     @Column()
     biography: string;
-
+    
     @CreateDateColumn()
-    createdAt:Date;
+    createdAt: Date;
 
-    @CreateDateColumn()
+    @UpdateDateColumn()
     updatedAt: Date;
 
-    @CreateDateColumn()
+    @DeleteDateColumn()
     deletedAt: Date;
 }
