@@ -35,13 +35,13 @@ export class UserRepository {
     return await this.userRepository.save(updateUserDto);
   }
 
-  async remove(id: number): Promise<UserEntity> {
+  async remove(id: number) {
     await this.userRepository.softDelete(id);
 
     return await this.userRepository
-      .createQueryBuilder('user')
+      .createQueryBuilder('music')
       .withDeleted()
-      .where('user.id = :id', {id})
+      .where('category.id = :id', { id })
       .getOne();
   }
 }
