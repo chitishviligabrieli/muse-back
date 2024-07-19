@@ -13,6 +13,7 @@ export class UserService {
 
   async createUser(password: string): Promise<void> {
     const hashedPassword = await this.hashingService.hashPassword(password);
+
   }
 
   async validatePassword(password: string, hashedPassword: string): Promise<boolean> {
@@ -21,7 +22,8 @@ export class UserService {
 
 
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
-    return await this.userRepository.create(createUserDto)
+    const hashedPassword = await this.hashingService.hashPassword(createUserDto.password);
+    return await this.userRepository.create({...createUserDto , password : hashedPassword})
   }
 
   async findAll(): Promise<UserEntity[]> {
