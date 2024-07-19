@@ -39,9 +39,9 @@ export class UserRepository {
     await this.userRepository.softDelete(id);
 
     return await this.userRepository
-      .createQueryBuilder('music')
+      .createQueryBuilder('user')
       .withDeleted()
-      .where('category.id = :id', { id })
+      .where('user.id = :id', { id })
       .getOne();
   }
 }
