@@ -5,9 +5,9 @@ import { ArtistModule } from './artist/artist.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MusicModule } from './music/music.module';
 import { AlbumModule } from './album/album.module';
-import { SearchModule } from './search/search.module';
 import { UserModule } from './user/user.module';
 import { HashingService } from './user/hashing.service';
+import { ListenersModule } from './listeners/listeners.module';
 
 @Module({
   imports: [
@@ -25,6 +25,7 @@ import { HashingService } from './user/hashing.service';
     MusicModule,
     AlbumModule,
     UserModule,
+    ListenersModule,
   ],
   controllers: [AppController],
   providers: [AppService, HashingService],
