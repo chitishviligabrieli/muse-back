@@ -9,11 +9,11 @@ import { UpdateArtistDto } from './dto/update-artist.dto';
 export class ArtistRepository {
   constructor(
     @InjectRepository(ArtistEntity)
-    private readonly artistRepository: Repository<ArtistEntity>
+    private readonly artistRepository: Repository<ArtistEntity>,
   ) {}
 
   async searchArtists(value: string): Promise<ArtistEntity[]> {
-    return await this.artistRepository
+    return this.artistRepository
       .createQueryBuilder('artist')
       .where('artist.firstName LIKE :value', { value: `%${value}%` })
       .orWhere('artist.lastName LIKE :value', { value: `%${value}%` })
