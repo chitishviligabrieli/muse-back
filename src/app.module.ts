@@ -8,6 +8,7 @@ import { AlbumModule } from './album/album.module';
 import { SearchModule } from './search/search.module';
 import { UserModule } from './user/user.module';
 import { HashingService } from './user/hashing.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -15,8 +16,8 @@ import { HashingService } from './user/hashing.service';
       port: 3306,
       host: 'localhost',
       username: 'root',
-      password: 'gabr12ieli34',
-      database: 'muse-back',
+      password: '123456',
+      database: 'music-app',
       autoLoadEntities: true,
       synchronize: true,
       type: 'mysql',
@@ -25,6 +26,7 @@ import { HashingService } from './user/hashing.service';
     MusicModule,
     AlbumModule,
     UserModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService, HashingService],

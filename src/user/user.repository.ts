@@ -9,11 +9,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 export class UserRepository {
   constructor(@InjectRepository(UserEntity)
   private readonly userRepository: Repository<UserEntity>) { }
-
   async create(data: CreateUserDto): Promise<UserEntity> {
-    const newUser= this.userRepository.create(data);
-    return await this.userRepository.save(newUser);
+    const newUser = this.userRepository.create(data);
+    const savedUser = await this.userRepository.save(newUser);
+    
+    delete savedUser.password;
+    
+    return savedUser;
   }
+  
 
   async findAll(): Promise<UserEntity[]>{
     return await this.userRepository
@@ -33,6 +37,10 @@ export class UserRepository {
   async updateUser(id: number, updateUserDto:UpdateUserDto): Promise<UserEntity> {
     await this.userRepository.update(id, updateUserDto);
     return await this.userRepository.save(updateUserDto);
+  }
+
+  findByEmailAndPassword(email:string){
+    return this.userRepository.findOne({where:{email:email},select:{email:true,password:true}})
   }
 
   async remove(id: number) {
