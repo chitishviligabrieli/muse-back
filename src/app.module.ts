@@ -8,16 +8,18 @@ import { AlbumModule } from './album/album.module';
 import { UserModule } from './user/user.module';
 import { HashingService } from './user/hashing.service';
 import { ListenersModule } from './listeners/listeners.module';
+import { ConfigModule } from '@nestjs/config';
+import * as process from 'node:process';
 
 @Module({
   imports: [
-    Consfig
+    ConfigModule.forRoot({}),
     TypeOrmModule.forRoot({
-      port: 3306,
-      host: 'muse-back.ct6uqg20qi89.eu-north-1.rds.amazonaws.com',
-      username: 'admin',
-      password: 'Gabr12ieli34',
-      database: 'museBack',
+      port: Number(process.env.DATABASE_PORT),
+      host: process.env.DATABASE_HOST,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
       synchronize: true,
       type: 'mysql',
