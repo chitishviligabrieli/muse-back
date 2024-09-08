@@ -11,9 +11,8 @@ export class UserService {
   constructor(private readonly hashingService: HashingService, private readonly userRepository: UserRepository) {
   }
 
-  async createUser(password: string): Promise<void> {
+  async createUser(createUserDto: CreateUserDto,password: string): Promise<void> {
     const hashedPassword = await this.hashingService.hashPassword(password);
-
   }
 
   async validatePassword(password: string, hashedPassword: string): Promise<boolean> {

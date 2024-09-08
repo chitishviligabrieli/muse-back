@@ -6,6 +6,4 @@ export class CreateListenerDto {
 
   @IsNumber()
   userId: number;
-
-
 }

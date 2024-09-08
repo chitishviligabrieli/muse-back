@@ -11,12 +11,13 @@ import { ListenersModule } from './listeners/listeners.module';
 
 @Module({
   imports: [
+    Consfig
     TypeOrmModule.forRoot({
       port: 3306,
-      host: 'localhost',
-      username: 'root',
-      password: 'gabr12ieli34',
-      database: 'muse-back',
+      host: 'muse-back.ct6uqg20qi89.eu-north-1.rds.amazonaws.com',
+      username: 'admin',
+      password: 'Gabr12ieli34',
+      database: 'museBack',
       autoLoadEntities: true,
       synchronize: true,
       type: 'mysql',
