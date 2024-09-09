@@ -1,9 +1,10 @@
 import {
   Entity,
   PrimaryGeneratedColumn,
-  ManyToOne,
+  ManyToMany,
   CreateDateColumn,
-  JoinColumn, Column,
+  JoinTable,
+  Column,
 } from 'typeorm';
 import { MusicEntity } from '../../music/entities/music.entity';
 import { UserEntity } from '../../user/entities/user.entity';
@@ -13,19 +14,21 @@ export class ListenersEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'int' })
-  musicId: number;
+  @ManyToMany(() => MusicEntity, (music) => music.listeners)
+  @JoinTable({
+    name: 'music_listeners',
+    joinColumn: { name: 'musicId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'userId', referencedColumnName: 'id' },
+  })
+  music: MusicEntity[];
 
-  @Column({ type: 'int' })
-  userId: number;
-
-  @ManyToOne(() => MusicEntity, (music) => music.id)
-  @JoinColumn({ name: 'musicId' })
-  music: MusicEntity;
-
-  @ManyToOne(() => UserEntity, (user) => user.id)
-  @JoinColumn({ name: 'userId' })
-  user: UserEntity;
+  @ManyToMany(() => UserEntity, (user) => user.musicListened)
+  @JoinTable({
+    name: 'music_listeners',
+    joinColumn: { name: 'userId', referencedColumnName: 'id' },
+    inverseJoinColumn: { name: 'musicId', referencedColumnName: 'id' },
+  })
+  user: UserEntity[];
 
   @CreateDateColumn()
   listenedAt: Date;

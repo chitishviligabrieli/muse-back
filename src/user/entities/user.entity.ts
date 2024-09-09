@@ -1,4 +1,13 @@
-import { Column, CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  DeleteDateColumn,
+  Entity,
+  ManyToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
+} from 'typeorm';
+import { ListenersEntity } from '../../listeners/entities/listener.entity';
 
 @Entity()
 export class UserEntity {
@@ -10,6 +19,9 @@ export class UserEntity {
 
   @Column({type: 'varchar',})
   password: string;
+
+  @ManyToMany(() => ListenersEntity, (listener) => listener.user)
+  musicListened: ListenersEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

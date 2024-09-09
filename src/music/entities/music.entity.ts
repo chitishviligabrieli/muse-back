@@ -2,11 +2,12 @@ import {
   Column,
   CreateDateColumn, DeleteDateColumn,
   Entity,
-  JoinColumn,
+  JoinColumn, ManyToMany,
   ManyToOne,
   PrimaryGeneratedColumn, UpdateDateColumn,
 } from 'typeorm';
 import { AlbumEntity } from '../../album/entities/album.entity';
+import { ListenersEntity } from '../../listeners/entities/listener.entity';
 
 
 @Entity()
@@ -26,6 +27,9 @@ export class MusicEntity {
   @ManyToOne(() => AlbumEntity, (album) => album.music)
   @JoinColumn({ name: 'albumId' })
   album:AlbumEntity[];
+
+  @ManyToMany(() => ListenersEntity, (listener) => listener.music)
+  listeners: ListenersEntity[];
 
   @CreateDateColumn()
   createdAt: Date;
