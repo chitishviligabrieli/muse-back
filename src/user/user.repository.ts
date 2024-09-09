@@ -17,9 +17,9 @@ export class UserRepository {
     const savedUser = await this.userRepository.save(newUser);
 
     delete savedUser.password;
-
     return savedUser;
   }
+  
 
   async findAll(): Promise<UserEntity[]> {
     return await this.userRepository
@@ -43,6 +43,10 @@ export class UserRepository {
     }
 
     return this.userRepository.save(user);
+  }
+
+  findByEmailAndPassword(email:string){
+    return this.userRepository.findOne({where:{email:email},select:{email:true,password:true}})
   }
 
   async remove(id: number) {

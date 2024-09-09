@@ -10,6 +10,9 @@ import { HashingService } from './user/hashing.service';
 import { ListenersModule } from './listeners/listeners.module';
 import { ConfigModule } from '@nestjs/config';
 import * as process from 'node:process';
+import { AuthModule } from './auth/auth.module';
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstant } from './auth/constants';
 
 @Module({
   imports: [
@@ -24,11 +27,17 @@ import * as process from 'node:process';
       synchronize: true,
       type: 'mysql',
     }),
+    JwtModule.register({
+      global: true,
+      secret: jwtConstant.secret,
+    }),
     ArtistModule,
     MusicModule,
     AlbumModule,
     UserModule,
     ListenersModule,
+    AuthModule,
+
   ],
   controllers: [AppController],
   providers: [AppService, HashingService],
