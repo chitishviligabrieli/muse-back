@@ -9,7 +9,6 @@ export class ArtistService {
   constructor(private readonly artistRepository: ArtistRepository) {}
 
   async create(createArtistDto: CreateArtistDto, user: {}): Promise<ArtistEntity> {
-    console.log(user)
     return await this.artistRepository.create(createArtistDto);
   }
 
