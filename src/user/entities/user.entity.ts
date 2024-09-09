@@ -2,8 +2,7 @@ import {
   Column,
   CreateDateColumn,
   DeleteDateColumn,
-  Entity,
-  ManyToMany,
+  Entity, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -14,13 +13,17 @@ export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({unique: true})
+  @Column({ unique: true })
   email: string;
 
-  @Column({type: 'varchar',})
+  @Column({ type: 'varchar' })
   password: string;
 
-  @ManyToMany(() => ListenersEntity, (listener) => listener.user)
+  @Column({default: "user"})
+  role: string;
+
+
+  @OneToMany(() => ListenersEntity, (listener) => listener.user)
   musicListened: ListenersEntity[];
 
   @CreateDateColumn()

@@ -12,6 +12,7 @@ export class UserRepository {
 
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const newUser= this.userRepository.create(createUserDto);
+    newUser.role = createUserDto.role || 'user'
 
     return await this.userRepository.save(newUser);
   }
@@ -26,14 +27,18 @@ export class UserRepository {
   async findOne(id: number): Promise<UserEntity> {
     return this.userRepository
       .createQueryBuilder('user')
-      .select(['user.email'])
+      .select(['user.email', 'user.role'])
       .where('user.id = :id', { id })
       .getOne();
   }
 
   async updateUser(id: number, updateUserDto:UpdateUserDto): Promise<UserEntity> {
-    await this.userRepository.update(id, updateUserDto);
-    return await this.userRepository.save(updateUserDto);
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (updateUserDto.role) {
+      user.role = updateUserDto.role;
+    }
+
+    return this.userRepository.save(user);
   }
 
   async remove(id: number) {

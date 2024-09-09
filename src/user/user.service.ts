@@ -11,15 +11,6 @@ export class UserService {
   constructor(private readonly hashingService: HashingService, private readonly userRepository: UserRepository) {
   }
 
-  async createUser(createUserDto: CreateUserDto,password: string): Promise<void> {
-    const hashedPassword = await this.hashingService.hashPassword(password);
-  }
-
-  async validatePassword(password: string, hashedPassword: string): Promise<boolean> {
-    return this.hashingService.comparePassword(password, hashedPassword);
-  }
-
-
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const hashedPassword = await this.hashingService.hashPassword(createUserDto.password);
     return await this.userRepository.create({...createUserDto , password : hashedPassword})
