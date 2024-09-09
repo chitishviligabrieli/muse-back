@@ -24,7 +24,7 @@ export class UserRepository {
   async findAll(): Promise<UserEntity[]> {
     return await this.userRepository
       .createQueryBuilder('user')
-      .select(['user.email'])
+      .select(['user.email', 'user.role'])
       .getMany();
   }
 
