@@ -8,35 +8,41 @@ import { UpdateUserDto } from './dto/update-user.dto';
 @Injectable()
 export class UserRepository {
   constructor(@InjectRepository(UserEntity)
-  private readonly userRepository: Repository<UserEntity>) { }
-  async create(data: CreateUserDto): Promise<UserEntity> {
-    const newUser = this.userRepository.create(data);
+              private readonly userRepository: Repository<UserEntity>) {
+  }
+
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
+    const newUser = this.userRepository.create(createUserDto);
+    newUser.role = createUserDto.role || 'user';
     const savedUser = await this.userRepository.save(newUser);
-    
+
     delete savedUser.password;
-    
     return savedUser;
   }
   
 
-  async findAll(): Promise<UserEntity[]>{
+  async findAll(): Promise<UserEntity[]> {
     return await this.userRepository
       .createQueryBuilder('user')
       .select(['user.email'])
-      .getMany()
+      .getMany();
   }
 
   async findOne(id: number): Promise<UserEntity> {
     return this.userRepository
       .createQueryBuilder('user')
-      .select(['user.email'])
+      .select(['user.email', 'user.role'])
       .where('user.id = :id', { id })
       .getOne();
   }
 
-  async updateUser(id: number, updateUserDto:UpdateUserDto): Promise<UserEntity> {
-    await this.userRepository.update(id, updateUserDto);
-    return await this.userRepository.save(updateUserDto);
+  async updateUser(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({ where: { id } });
+    if (updateUserDto.role) {
+      user.role = updateUserDto.role;
+    }
+
+    return this.userRepository.save(user);
   }
 
   findByEmailAndPassword(email:string){

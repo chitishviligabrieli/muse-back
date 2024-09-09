@@ -5,21 +5,24 @@ import { ArtistModule } from './artist/artist.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MusicModule } from './music/music.module';
 import { AlbumModule } from './album/album.module';
-import { SearchModule } from './search/search.module';
 import { UserModule } from './user/user.module';
 import { HashingService } from './user/hashing.service';
+import { ListenersModule } from './listeners/listeners.module';
+import { ConfigModule } from '@nestjs/config';
+import * as process from 'node:process';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstant } from './auth/constants';
 
 @Module({
   imports: [
+    ConfigModule.forRoot({}),
     TypeOrmModule.forRoot({
-      port: 3306,
-      host: 'localhost',
-      username: 'root',
-      password: '123456',
-      database: 'music-app',
+      port: Number(process.env.DATABASE_PORT),
+      host: process.env.DATABASE_HOST,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
       synchronize: true,
       type: 'mysql',
@@ -32,7 +35,9 @@ import { jwtConstant } from './auth/constants';
     MusicModule,
     AlbumModule,
     UserModule,
+    ListenersModule,
     AuthModule,
+
   ],
   controllers: [AppController],
   providers: [AppService, HashingService],
