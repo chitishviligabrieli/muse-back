@@ -27,6 +27,11 @@ export class UserRepository {
       .select(['user.email', 'user.role'])
       .getMany();
   }
+  async findOneByEmail(email: string): Promise<UserEntity> {
+    return this.userRepository.findOne({
+      where: { email },
+    });
+  }
 
   async findOne(id: number): Promise<UserEntity> {
     return this.userRepository
