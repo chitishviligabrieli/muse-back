@@ -10,7 +10,11 @@ async function bootstrap() {
     whitelist: true,
     transform: true
   }));
-  app.enableCors();
+  app.enableCors({
+    origin: 'https://www.museappofficial.com/', 
+    methods: 'GET, POST, PUT, DELETE', // Specify allowed methods
+    credentials: true, // Allow cookies or authorization headers
+  });
 
   await app.listen(3000);
 }
