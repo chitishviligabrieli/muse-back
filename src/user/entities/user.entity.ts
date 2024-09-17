@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { ListenersEntity } from '../../listeners/entities/listener.entity';
+import { RolesEnum } from '../../auth/role/role';
 
 @Entity()
 export class UserEntity {
@@ -20,9 +21,8 @@ export class UserEntity {
 
   password: string;
 
-  @Column({default: "user"})
-  role: string;
-
+  @Column({type: 'enum', enum: RolesEnum, default: RolesEnum.User})
+  role: RolesEnum;
 
   @OneToMany(() => ListenersEntity, (listener) => listener.user)
   musicListened: ListenersEntity[];

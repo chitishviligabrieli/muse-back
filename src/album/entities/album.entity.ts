@@ -20,10 +20,16 @@ export class AlbumEntity {
     title: string;
 
     @Column({ type: 'varchar' })
+    subtitle: string;
+
+    @Column({ type: 'varchar' })
     releaseDate: string;
 
     @Column({ type: 'int' })
     artistId: number;
+
+    @Column({type: 'varchar'})
+    image: string;
 
     @OneToMany(() => MusicEntity, (music) => music.album)
     music:MusicEntity[];

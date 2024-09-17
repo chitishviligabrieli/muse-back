@@ -3,7 +3,16 @@ import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
 export class CreateMusicDto {
     @IsString()
     @IsNotEmpty()
-    name: string
+    musicTitle: string
+
+    @IsString()
+    file:string
+
+    @IsString()
+    artistName: string
+
+    @IsString()
+    src: string
 
     @IsNumber()
     @IsNotEmpty()
@@ -12,5 +21,4 @@ export class CreateMusicDto {
     @IsNumber()
     @IsNotEmpty()
     duration: number;
-
 }

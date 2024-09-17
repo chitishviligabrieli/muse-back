@@ -4,6 +4,7 @@ import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { RolesEnum } from '../auth/role/role';
 
 @Injectable()
 export class UserRepository {
@@ -13,7 +14,7 @@ export class UserRepository {
 
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const newUser = this.userRepository.create(createUserDto);
-    newUser.role = createUserDto.role || 'user';
+    newUser.role = createUserDto.role || RolesEnum.User;
     const savedUser = await this.userRepository.save(newUser);
 
     delete savedUser.password;
@@ -51,7 +52,7 @@ export class UserRepository {
   }
 
   findByEmailAndPassword(email:string){
-    return this.userRepository.findOne({where:{email:email},select:{email:true,password:true}})
+    return this.userRepository.findOne({where:{email:email},select:{email:true,password:true, role: true}})
   }
 
   async remove(id: number) {

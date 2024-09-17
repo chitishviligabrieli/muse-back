@@ -4,6 +4,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { HashingService } from './hashing.service';
 import { UserRepository } from './user.repository';
 import { UserEntity } from './entities/user.entity';
+import { Admin } from '../auth/decorators/is-admin.decorator';
 
 @Injectable()
 export class UserService {
@@ -23,6 +24,7 @@ export class UserService {
     return await this.userRepository.create({ ...createUserDto, password: hashedPassword });
   }
 
+  @Admin()
   async findAll(): Promise<UserEntity[]> {
     const user = await this.userRepository.findAll();
     if (!user) {
@@ -39,6 +41,7 @@ export class UserService {
     return user;
   }
 
+  @Admin()
   async update(id: number, updateUserDto: UpdateUserDto) {
     const user = await this.userRepository.findOne(id);
     if (!user) {
@@ -49,6 +52,7 @@ export class UserService {
     return this.userRepository.findOne(id);
   }
 
+  @Admin()
   async remove(id: number) {
     return await this.userRepository.remove(id);
   }
