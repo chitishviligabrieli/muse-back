@@ -13,6 +13,8 @@ import * as process from 'node:process';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
 import { jwtConstant } from './auth/constants';
+import { FilesModule } from './files/files.module';
+import { AwsModule } from './aws/aws.module';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { jwtConstant } from './auth/constants';
     UserModule,
     ListenersModule,
     AuthModule,
+    FilesModule,
+    AwsModule,
 
   ],
   controllers: [AppController],
