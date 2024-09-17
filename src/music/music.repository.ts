@@ -10,8 +10,8 @@ export class MusicRepository {
   constructor(@InjectRepository(MusicEntity)
               private readonly musicRepository: Repository<MusicEntity>) { }
 
-  async create(data: CreateMusicDto) {
-    const newProduct = this.musicRepository.create(data);
+  async create(createMusicDto: CreateMusicDto) {
+    const newProduct = this.musicRepository.create(createMusicDto);
       return await this.musicRepository.save(newProduct);
   }
 

@@ -53,7 +53,7 @@ export class AlbumRepository {
     return await this.albumRepository
       .createQueryBuilder('album')
       .withDeleted()
-      .where('category.id = :id', { id })
+      .where('album.id = :id', { id })
       .getOne();
   }
 }

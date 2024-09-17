@@ -1,5 +1,7 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsString } from 'class-validator';
-import { UserType } from '../entities/user-type';
+import { IsEmail, IsEnum, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
+import { Match } from '../../auth/decorators/match.decorator';
+import { RolesEnum } from '../../auth/role/role';
+import { DefaultNamingStrategy } from 'typeorm';
 
 export class CreateUserDto {
   @IsNotEmpty()
@@ -10,7 +12,12 @@ export class CreateUserDto {
   @IsString()
   password: string;
 
+  @IsNotEmpty()
   @IsString()
-  @IsEnum(UserType)
-  role: string;
+  @Match('password', { message: 'Passwords do not match' })  // Add custom validation here
+  confirmPassword: string;
+
+  @IsOptional()
+  @IsEnum(RolesEnum, { message: 'Role must be either admin or user'})
+  role?: RolesEnum;
 }

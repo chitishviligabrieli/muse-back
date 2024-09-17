@@ -4,19 +4,15 @@ import { IsArray, IsString, IsUrl, ArrayNotEmpty, IsNotEmpty } from 'class-valid
 export class CreateArtistDto {
     @IsString()
     @IsNotEmpty()
-    firstName: string;
-  
-    @IsString()
-    @IsNotEmpty()
-    lastName: string;
-
-    @IsArray()
-    @ArrayNotEmpty()
-    @IsUrl({}, { each: true })
-    musics: string[];
+    name: string;
 
     @IsString()
     @IsNotEmpty()
     biography: string;
 
+    @IsString()
+    image: string;
+
+    @IsString()
+    cover: string;
 }

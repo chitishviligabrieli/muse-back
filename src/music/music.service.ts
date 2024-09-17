@@ -2,6 +2,8 @@ import { Injectable } from '@nestjs/common';
 import { CreateMusicDto } from './dto/create-music.dto';
 import { UpdateMusicDto } from './dto/update-music.dto';
 import { MusicRepository } from './music.repository';
+import { Admin } from '../auth/decorators/is-admin.decorator';
+import { FileEntity } from '../files/entities/file.entity';
 
 @Injectable()
 export class MusicService {
@@ -9,7 +11,7 @@ export class MusicService {
   constructor(private readonly musicRepository: MusicRepository) { }
 
   async create(createMusicDto: CreateMusicDto) {
-    return await this.musicRepository.create(createMusicDto);
+    const  music = await this.musicRepository.create(createMusicDto);
   }
 
   async findAll() {
@@ -21,7 +23,7 @@ export class MusicService {
   }
 
   async update(id: number, updateMusicDto: UpdateMusicDto) {
-    return await this.musicRepository.update(id, UpdateMusicDto);
+    return await this.musicRepository.update(id, updateMusicDto);
   }
 
   async remove(id: number) {

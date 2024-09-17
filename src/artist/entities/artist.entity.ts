@@ -1,37 +1,40 @@
 import {
-    Entity,
-    PrimaryGeneratedColumn,
-    Column,
-    CreateDateColumn,
-    OneToMany,
-    DeleteDateColumn, UpdateDateColumn,
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  OneToMany,
+  DeleteDateColumn, UpdateDateColumn,
 } from 'typeorm';
 import { AlbumEntity } from '../../album/entities/album.entity';
 
 
 @Entity()
 export class ArtistEntity {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    firstName: string;
+  @Column({ type: 'varchar' })
+  name: string;
 
-    @Column()
-    lastName: string;
+  @Column({ type: 'varchar' })
+  biography: string;
 
-    @Column()
-    biography: string;
+  @Column({ type: 'varchar' })
+  image: string;
 
-    @OneToMany(() => AlbumEntity, (album) => album.artist)
-    album: AlbumEntity[];
+  @Column({ type: 'varchar' })
+  cover: string;
 
-    @CreateDateColumn()
-    createdAt: Date;
+  @OneToMany(() => AlbumEntity, (album) => album.artist)
+  album: AlbumEntity[];
 
-    @UpdateDateColumn()
-    updatedAt: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-    @DeleteDateColumn()
-    deletedAt: Date;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt: Date;
 }

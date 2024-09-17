@@ -16,6 +16,7 @@ import { jwtConstant } from './auth/constants';
 import { FilesModule } from './files/files.module';
 import { AwsModule } from './aws/aws.module';
 
+
 @Module({
   imports: [
     ConfigModule.forRoot({}),
@@ -31,7 +32,7 @@ import { AwsModule } from './aws/aws.module';
     }),
     JwtModule.register({
       global: true,
-      secret: jwtConstant.secret,
+      secret: process.env.JWT_SECRET,
     }),
     ArtistModule,
     MusicModule,
@@ -44,6 +45,11 @@ import { AwsModule } from './aws/aws.module';
 
   ],
   controllers: [AppController],
-  providers: [AppService, HashingService],
+  providers: [HashingService, AppService,
+  //   {
+  //   provide: APP_GUARD,
+  //   useClass: AuthGuard,
+  // }
+  ],
 })
 export class AppModule {}
