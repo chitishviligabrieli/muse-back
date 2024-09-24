@@ -52,7 +52,7 @@ export class MusicRepository {
     return await this.musicRepository
       .createQueryBuilder('music')
       .withDeleted()
-      .where('category.id = :id', { id })
+      .where('music.id = :id', { id })
       .getOne();
   }
 }

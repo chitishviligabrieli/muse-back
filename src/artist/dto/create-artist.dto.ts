@@ -1,4 +1,5 @@
 import { IsArray, IsString, IsUrl, ArrayNotEmpty, IsNotEmpty } from 'class-validator';
+import { FileEntity } from '../../files/entities/file.entity';
 
 
 export class CreateArtistDto {
@@ -10,9 +11,4 @@ export class CreateArtistDto {
     @IsNotEmpty()
     biography: string;
 
-    @IsString()
-    image: string;
-
-    @IsString()
-    cover: string;
 }

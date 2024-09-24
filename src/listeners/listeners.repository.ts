@@ -11,8 +11,8 @@ export class ListenersRepository {
     @InjectRepository(ListenersEntity)
     private readonly listenersRepository: Repository<ListenersEntity>) {}
 
-  async create(createlistenersDto: CreateListenerDto): Promise<ListenersEntity> {
-    const listener = this.listenersRepository.create(createlistenersDto);
+  async create(createListenerDto: CreateListenerDto): Promise<ListenersEntity> {
+    const listener = this.listenersRepository.create(createListenerDto);
     return await this.listenersRepository.save(listener);
   }
 

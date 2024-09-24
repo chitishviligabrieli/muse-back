@@ -9,6 +9,7 @@ import { S3Service } from 'src/aws/services/s3.service';
 @Module({
   imports:[TypeOrmModule.forFeature([FileEntity])],
   controllers: [FilesController],
-  providers: [FilesService,FilesRepository,S3Service]
+  providers: [FilesService,FilesRepository,S3Service],
+  exports: [FilesRepository, S3Service, FilesService]
 })
 export class FilesModule {}

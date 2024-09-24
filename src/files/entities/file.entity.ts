@@ -1,4 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { MusicEntity } from '../../music/entities/music.entity';
+import { ListenersEntity } from '../../listeners/entities/listener.entity';
 
 
 @Entity({name:'files'})
@@ -8,7 +10,10 @@ export class FileEntity{
     id:number;
 
     @Column()
-    url:string
+    imageUrl:string
+
+    @Column()
+    coverUrl: string
 
     @Column()
     key:string

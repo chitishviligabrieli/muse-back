@@ -21,8 +21,12 @@ export class ArtistRepository {
       .getMany();
   }
 
-  async create(data: CreateArtistDto): Promise<ArtistEntity> {
-    const newArtist = this.artistRepository.create(data);
+  async create(data: CreateArtistDto, ImageUrl: string, CoverUrl: string): Promise<ArtistEntity> {
+    const newArtist = this.artistRepository.create({
+      ...data,
+      image: ImageUrl,
+      cover: CoverUrl,
+    });
     return await this.artistRepository.save(newArtist);
   }
 
@@ -35,7 +39,7 @@ export class ArtistRepository {
   }
 
   async update(id: number, data: UpdateArtistDto): Promise<ArtistEntity> {
-    await this.artistRepository.update(id, data);
+    await this.artistRepository.update(id, data,);
     return await this.artistRepository.findOne({ where: { id } });
   }
 
