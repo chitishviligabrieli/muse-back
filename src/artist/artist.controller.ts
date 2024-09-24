@@ -1,8 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req, UseInterceptors } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Req,
+  UseInterceptors,
+  UploadedFile,
+  UploadedFiles,
+} from '@nestjs/common';
 import { ArtistService } from './artist.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
 // import { AuthGuard } from 'src/auth/auth.guard.service';
 
 
@@ -10,11 +22,18 @@ import { FileInterceptor } from '@nestjs/platform-express';
 export class ArtistController {
   constructor(private readonly artistService: ArtistService) {}
 
-  // @UseGuards(AuthGuard)
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  async create(@Body() createArtistDto: CreateArtistDto, @Req() req) {
-    return await this.artistService.create(createArtistDto,req.user);
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'image'},
+    { name: 'cover'},
+  ]))
+  UploadedFile(@UploadedFiles() files: { avatar?: Express.Multer.File[], background?: Express.Multer.File[] }) {
+    console.log(files);
+  }
+  async create(@Body() createArtistDto: CreateArtistDto, @UploadedFile() image : Express.Multer.File, cover : Express.Multer.File,@Req() req) {
+    console.log(image)
+
+    return await this.artistService.create(createArtistDto,req.user, image, cover);
   }
 
   @Get()

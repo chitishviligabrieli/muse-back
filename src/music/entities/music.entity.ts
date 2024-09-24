@@ -27,12 +27,12 @@ export class MusicEntity {
   @Column({ type: 'int' })
   duration: number;
 
+  @Column({type: 'varchar'})
+  file: string
+
   @ManyToOne(() => AlbumEntity, (album) => album.music)
   @JoinColumn({ name: 'albumId' })
   album: AlbumEntity[];
-
-  // @ManyToOne(() => FileEntity)
-  // file: FileEntity;
 
   @OneToMany(() => ListenersEntity, (listener) => listener.music)
   listeners: ListenersEntity[];

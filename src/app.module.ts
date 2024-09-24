@@ -15,6 +15,8 @@ import { JwtModule } from '@nestjs/jwt';
 import { jwtConstant } from './auth/constants';
 import { FilesModule } from './files/files.module';
 import { AwsModule } from './aws/aws.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/guard/roles.guard';
 
 
 @Module({
@@ -46,10 +48,10 @@ import { AwsModule } from './aws/aws.module';
   ],
   controllers: [AppController],
   providers: [HashingService, AppService,
-  //   {
-  //   provide: APP_GUARD,
-  //   useClass: AuthGuard,
-  // }
+    {
+    provide: APP_GUARD,
+    useClass: RolesGuard,
+  }
   ],
 })
 export class AppModule {}

@@ -4,14 +4,20 @@ import { UpdateArtistDto } from './dto/update-artist.dto';
 import { ArtistRepository } from './artist.repository';
 import { ArtistEntity } from './entities/artist.entity';
 import { Admin } from '../auth/decorators/is-admin.decorator';
+import { AlbumRepository } from '../album/album.repository';
+import { FilesService } from '../files/files.service';
 
 @Injectable()
 export class ArtistService {
-  constructor(private readonly artistRepository: ArtistRepository) {}
+  constructor(private readonly artistRepository: ArtistRepository,
+              private readonly fileService: FilesService,
+              ) {}
 
   @Admin()
-  async create(createArtistDto: CreateArtistDto, user: {}): Promise<ArtistEntity> {
-    return await this.artistRepository.create(createArtistDto);
+  async create(createArtistDto: CreateArtistDto, user: {}, Image: Express.Multer.File, Cover: Express.Multer.File): Promise<ArtistEntity> {
+    const uploadedImageUrl = await this.fileService.uploadFile(Image)
+    const uploadedCoverUrl = await  this.fileService.uploadFile(Cover)
+      return await this.artistRepository.create(createArtistDto, uploadedImageUrl.imageUrl, uploadedCoverUrl.coverUrl);
   }
 
   async findAll(): Promise<ArtistEntity[]> {

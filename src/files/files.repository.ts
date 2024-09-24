@@ -6,19 +6,19 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class FilesRepository {
     constructor(
-        @InjectRepository(FileEntity) 
+        @InjectRepository(FileEntity)
         private readonly fileRepo:Repository<FileEntity> ){}
-   async save(fileName:string,url:string,key:string,bucket:string){
+   async save(fileName:string,imageUrl:string,key:string,bucket:string){
         const newFile = new FileEntity()
 
         newFile.fileName = fileName
-        newFile.url = url
-        newFile.key = key,
-        newFile.bucket = bucket    
+        newFile.imageUrl = imageUrl
+        newFile.key = key
+        newFile.bucket = bucket
 
         return await this.fileRepo.save(newFile)
-    } 
-    
+    }
+
     async findOne(id:number){
         return this.fileRepo.findOne({where:{id}})
     }

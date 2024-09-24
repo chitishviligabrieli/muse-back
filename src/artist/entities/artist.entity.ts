@@ -4,9 +4,10 @@ import {
   Column,
   CreateDateColumn,
   OneToMany,
-  DeleteDateColumn, UpdateDateColumn,
+  DeleteDateColumn, UpdateDateColumn, ManyToOne,
 } from 'typeorm';
 import { AlbumEntity } from '../../album/entities/album.entity';
+import { FileEntity } from '../../files/entities/file.entity';
 
 
 @Entity()
@@ -25,6 +26,9 @@ export class ArtistEntity {
 
   @Column({ type: 'varchar' })
   cover: string;
+
+  @ManyToOne(() => FileEntity)
+  file: FileEntity;
 
   @OneToMany(() => AlbumEntity, (album) => album.artist)
   album: AlbumEntity[];
