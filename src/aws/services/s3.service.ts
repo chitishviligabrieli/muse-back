@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import * as AWS from "aws-sdk"
-import { MimeType } from "aws-sdk/clients/kendra";
+
+
 
 @Injectable()
 
@@ -21,12 +22,13 @@ export class S3Service{
 
     async upload(file:Express.Multer.File,key:string){
 
-        const buffer = file.buffer
+        const buffer = file[0].buffer
+
         
         const fileKey = key 
         const params = {
             Bucket: this.bucketName,
-            Key: fileKey,
+            Key: String(fileKey),
             Body: buffer,
             ContentType: file.mimetype,
             ContentDisposition: 'inline',
@@ -38,7 +40,8 @@ export class S3Service{
         try {
             return await this.s3Client.upload(params).promise();
         } catch (e) {
-            throw e;
+            console.error('Error uploading file to S3:', e.message);
+            throw new Error('File upload failed');
         }
         
         
@@ -48,17 +51,13 @@ export class S3Service{
         const params = {
             Bucket: bucket || this.bucketName,
             Key: key,
-            Expires: 3600, 
+            Expires: 111111111113600,
         };
     
         try {
             const url = await this.s3Client.getSignedUrlPromise('getObject', params);
             return url;
         } catch (error) {
-            console.log(
-                `Failed to get presigned URL for key ${key}`,
-                error.stack
-            );
             throw error;
         }
     }

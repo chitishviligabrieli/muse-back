@@ -13,10 +13,12 @@ export class ArtistService {
               private readonly fileService: FilesService,
               ) {}
 
-  @Admin()
-  async create(createArtistDto: CreateArtistDto, user: {}, Image: Express.Multer.File, Cover: Express.Multer.File): Promise<ArtistEntity> {
+
+  async create(createArtistDto: CreateArtistDto, artist: {}, Image: Express.Multer.File, Cover: Express.Multer.File): Promise<ArtistEntity> {
     const uploadedImageUrl = await this.fileService.uploadFile(Image)
     const uploadedCoverUrl = await  this.fileService.uploadFile(Cover)
+    console.log('2222222222222')
+
       return await this.artistRepository.create(createArtistDto, uploadedImageUrl.imageUrl, uploadedCoverUrl.coverUrl);
   }
 

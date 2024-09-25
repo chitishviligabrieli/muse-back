@@ -1,5 +1,4 @@
-import { IsArray, IsString, IsUrl, ArrayNotEmpty, IsNotEmpty } from 'class-validator';
-import { FileEntity } from '../../files/entities/file.entity';
+import { IsString, IsNotEmpty } from 'class-validator';
 
 
 export class CreateArtistDto {
