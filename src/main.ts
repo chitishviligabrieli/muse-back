@@ -1,22 +1,23 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
-import "dotenv/config"
-import { Transform } from 'class-transformer';
-import { RolesGuard } from './auth/guard/roles.guard';
+import "dotenv/config";
+import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.useGlobalPipes(new ValidationPipe({
     whitelist: true,
-    transform: true
+    transform: true,
   }));
-  app.enableCors({
-    origin: 'https://www.museappofficial.com/', 
-    methods: 'GET, POST, PUT, DELETE', // Specify allowed methods
-    credentials: true, // Allow cookies or authorization headers
-  });
+
+  const corsOptions: CorsOptions = {
+    origin: '*', // Use environment variable
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  };
+
+  app.enableCors(corsOptions);
 
   await app.listen(3000);
 }

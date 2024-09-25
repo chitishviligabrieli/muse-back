@@ -15,25 +15,33 @@ import { ArtistService } from './artist.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
+import { Public } from '../auth/decorators/public.decorator';
+import { Admin } from '../auth/decorators/is-admin.decorator';
+
 // import { AuthGuard } from 'src/auth/auth.guard.service';
 
 
 @Controller('artist')
 export class ArtistController {
-  constructor(private readonly artistService: ArtistService) {}
+  constructor(private readonly artistService: ArtistService) {
+  }
 
+  @Admin()
   @Post()
   @UseInterceptors(FileFieldsInterceptor([
-    { name: 'image'},
-    { name: 'cover'},
+    { name: 'image', maxCount: 1 },
+    { name: 'cover', maxCount: 1 },
   ]))
-  UploadedFile(@UploadedFiles() files: { avatar?: Express.Multer.File[], background?: Express.Multer.File[] }) {
-    console.log(files);
-  }
-  async create(@Body() createArtistDto: CreateArtistDto, @UploadedFile() image : Express.Multer.File, cover : Express.Multer.File,@Req() req) {
-    console.log(image)
+  async create(
+    @Body() createArtistDto: CreateArtistDto,
+    @UploadedFiles() files: { image?: Express.Multer.File, cover?: Express.Multer.File },
+    @Req() req) {
+    console.log(createArtistDto, 'createarti');
+    const { name, biography } = req.body;
 
-    return await this.artistService.create(createArtistDto,req.user, image, cover);
+    console.log(req.body , 'reqq');
+
+    return await this.artistService.create(createArtistDto, req.user, files.image, files.cover);
   }
 
   @Get()
