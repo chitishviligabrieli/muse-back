@@ -3,14 +3,14 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  JoinColumn,
+  JoinColumn, JoinTable, ManyToMany,
   ManyToOne, OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { AlbumEntity } from '../../album/entities/album.entity';
 import { ListenersEntity } from '../../listeners/entities/listener.entity';
-import { FileEntity } from '../../files/entities/file.entity';
+import { PlaylistEntity } from '../../playlist/entities/playlist.entity';
 
 
 @Entity()
@@ -27,12 +27,16 @@ export class MusicEntity {
   @Column({ type: 'int' })
   duration: number;
 
-  @Column({type: 'varchar'})
-  file: string
+  @Column({ type: 'varchar' })
+  file: string;
 
   @ManyToOne(() => AlbumEntity, (album) => album.music)
   @JoinColumn({ name: 'albumId' })
   album: AlbumEntity[];
+
+  @ManyToMany(() => PlaylistEntity, (playlist) => playlist.music)
+  @JoinTable()
+  playlists: PlaylistEntity[];
 
   @OneToMany(() => ListenersEntity, (listener) => listener.music)
   listeners: ListenersEntity[];
