@@ -18,11 +18,13 @@ export class UserEntity {
   email: string;
 
   @Column({type: 'varchar',select:false})
-
   password: string;
 
   @Column({type: 'enum', enum: RolesEnum, default: RolesEnum.User})
   role: RolesEnum;
+
+  @Column({type: 'boolean', default: false})
+  blocked:boolean;
 
   @OneToMany(() => ListenersEntity, (listener) => listener.user)
   musicListened: ListenersEntity[];

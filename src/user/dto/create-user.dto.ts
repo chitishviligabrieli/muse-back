@@ -1,4 +1,4 @@
-import { IsEmail, IsEnum, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
+import { IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsObject, IsOptional, IsString } from 'class-validator';
 import { Match } from '../../auth/decorators/match.decorator';
 import { RolesEnum } from '../../auth/role/role';
 import { DefaultNamingStrategy } from 'typeorm';
@@ -20,4 +20,7 @@ export class CreateUserDto {
   @IsOptional()
   @IsEnum(RolesEnum, { message: 'Role must be either admin or user'})
   role?: RolesEnum;
+  
+  @IsBoolean()
+  blocked: boolean;
 }

@@ -17,6 +17,9 @@ import { FilesModule } from './files/files.module';
 import { AwsModule } from './aws/aws.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guard/roles.guard';
+import { PlaylistModule } from './playlist/playlist.module';
+import { PlaylistEntity } from './playlist/entities/playlist.entity';
+import { MusicEntity } from './music/entities/music.entity';
 
 
 @Module({
@@ -44,6 +47,7 @@ import { RolesGuard } from './auth/guard/roles.guard';
     AuthModule,
     FilesModule,
     AwsModule,
+    PlaylistModule,
 
   ],
   controllers: [AppController],

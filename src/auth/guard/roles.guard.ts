@@ -32,7 +32,6 @@ export class RolesGuard implements CanActivate {
     try {
       const payload = await this.jwtService.verifyAsync(token);
       request.user = payload;
-      console.log(payload.role)
 
       const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
         context.getHandler(),
@@ -47,8 +46,6 @@ export class RolesGuard implements CanActivate {
       if (isAdmin && payload.role !== 'admin') {
         throw new ForbiddenException('Admin access required');
       }
-
-      console.log(payload.role)
 
       if (requiredRoles && !requiredRoles.includes(payload.role)) {
         throw new ForbiddenException('You do not have the required role');
