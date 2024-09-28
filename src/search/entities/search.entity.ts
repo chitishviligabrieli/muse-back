@@ -1,1 +1,3 @@
-export class SearchEntity {}
+export class SearchEntity {
+
+}

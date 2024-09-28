@@ -12,7 +12,7 @@ export class FilesRepository {
         const newFile = new FileEntity()
 
         newFile.fileName = fileName
-        newFile.imageUrl = imageUrl
+        newFile.url = imageUrl
         newFile.key = key
         newFile.bucket = bucket
 

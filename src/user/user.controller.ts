@@ -2,7 +2,6 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Roles } from '../auth/decorators/role.decorator';
 import { Public } from '../auth/decorators/public.decorator';
 import { Admin } from '../auth/decorators/is-admin.decorator';
 
@@ -12,7 +11,6 @@ export class UserController {
 
   @Public()
   @Post()
-  // @Roles(Role.Admin)
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto);
   }

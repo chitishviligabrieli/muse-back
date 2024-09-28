@@ -20,14 +20,15 @@ export class UserRepository {
     delete savedUser.password;
     return savedUser;
   }
-  
+
 
   async findAll(): Promise<UserEntity[]> {
     return await this.userRepository
       .createQueryBuilder('user')
-      .select(['user.email', 'user.role'])
+      .select(['user.id', 'user.email', 'user.role', 'user.blocked'])
       .getMany();
   }
+
   async findOneByEmail(email: string): Promise<UserEntity> {
     return this.userRepository.findOne({
       where: { email },
@@ -37,7 +38,7 @@ export class UserRepository {
   async findOne(id: number): Promise<UserEntity> {
     return this.userRepository
       .createQueryBuilder('user')
-      .select(['user.email', 'user.role'])
+      .select(['user.id', 'user.email', 'user.role', 'user.blocked'])
       .where('user.id = :id', { id })
       .getOne();
   }
@@ -48,11 +49,17 @@ export class UserRepository {
       user.role = updateUserDto.role;
     }
 
+    if (updateUserDto.blocked) {
+      user.blocked = updateUserDto.blocked;
+
+      console.log(user.blocked, 'blocked');
+    }
+
     return this.userRepository.save(user);
   }
 
-  findByEmailAndPassword(email:string){
-    return this.userRepository.findOne({where:{email:email},select:{email:true,password:true, role: true}})
+  findByEmailAndPassword(email: string) {
+    return this.userRepository.findOne({ where: { email: email }, select: { email: true, password: true, role: true } });
   }
 
   async remove(id: number) {

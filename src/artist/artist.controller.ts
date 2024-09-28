@@ -33,12 +33,11 @@ export class ArtistController {
     @Body() createArtistDto: CreateArtistDto,
     @UploadedFiles() files: { image?: Express.Multer.File, cover?: Express.Multer.File },
     @Req() req) {
-    console.log(createArtistDto, 'createarti');
     const { name, biography } = req.body;
 
     console.log(req.body , 'reqq');
 
-    return await this.artistService.create(createArtistDto, req.user, files.image, files.cover);
+    return await this.artistService.create(createArtistDto, req.user, files.image[0], files.cover[0]);
   }
 
   @Get()

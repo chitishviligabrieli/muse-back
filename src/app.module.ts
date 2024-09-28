@@ -20,6 +20,8 @@ import { RolesGuard } from './auth/guard/roles.guard';
 import { PlaylistModule } from './playlist/playlist.module';
 import { PlaylistEntity } from './playlist/entities/playlist.entity';
 import { MusicEntity } from './music/entities/music.entity';
+import { FavoritesModule } from './favorites/favorites.module';
+import { SearchModule } from './search/search.module';
 
 
 @Module({
@@ -48,7 +50,8 @@ import { MusicEntity } from './music/entities/music.entity';
     FilesModule,
     AwsModule,
     PlaylistModule,
-
+    FavoritesModule,
+    // SearchModule
   ],
   controllers: [AppController],
   providers: [HashingService, AppService,
