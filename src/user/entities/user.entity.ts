@@ -8,6 +8,7 @@ import {
 } from 'typeorm';
 import { ListenersEntity } from '../../listeners/entities/listener.entity';
 import { RolesEnum } from '../../auth/role/role';
+import { FavoritesEntity } from '../../favorites/entities/favorite.entity';
 
 @Entity()
 export class UserEntity {
@@ -28,6 +29,9 @@ export class UserEntity {
 
   @OneToMany(() => ListenersEntity, (listener) => listener.user)
   musicListened: ListenersEntity[];
+
+  @OneToMany(() => FavoritesEntity, (favorite) => favorite.user)
+  favorites: FavoritesEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

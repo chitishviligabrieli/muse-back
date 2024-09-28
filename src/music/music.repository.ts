@@ -11,8 +11,8 @@ export class MusicRepository {
               private readonly musicRepository: Repository<MusicEntity>) { }
 
   async create(createMusicDto: CreateMusicDto) {
-    const newProduct = this.musicRepository.create(createMusicDto);
-      return await this.musicRepository.save(newProduct);
+    const music = this.musicRepository.create(createMusicDto);
+      return await this.musicRepository.save(music);
   }
 
   async searchMusic(value: string): Promise<MusicEntity[]> {

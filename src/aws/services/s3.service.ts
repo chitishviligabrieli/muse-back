@@ -22,19 +22,15 @@ export class S3Service{
 
     async upload(file:Express.Multer.File,key:string){
 
-        const buffer = file[0].buffer
+        const buffer = file.buffer
 
-        
-        const fileKey = key 
+        const fileKey = key
         const params = {
             Bucket: this.bucketName,
             Key: String(fileKey),
             Body: buffer,
             ContentType: file.mimetype,
             ContentDisposition: 'inline',
-            CreateBucketConfiguration: {
-                LocationConstraint: 'eu-north-1',
-            },
         };
         
         try {

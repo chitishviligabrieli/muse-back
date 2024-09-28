@@ -14,8 +14,8 @@ export class PlaylistRepository {
               private readonly playlistRepository: Repository<PlaylistEntity>) { }
 
   async create(createPlaylistDto: CreatePlaylistDto) {
-    const newProduct = this.playlistRepository.create(createPlaylistDto);
-    return await this.playlistRepository.save(newProduct);
+    const playlist = this.playlistRepository.create(createPlaylistDto);
+    return await this.playlistRepository.save(playlist);
   }
 
   async findAll(): Promise<PlaylistEntity[]> {

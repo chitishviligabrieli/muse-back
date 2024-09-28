@@ -41,18 +41,16 @@ export class UserService {
     return user;
   }
 
-  @Admin()
-  async update(id: number, updateUserDto: UpdateUserDto) {
+  async update(id: number, updateUserDto: UpdateUserDto): Promise<UserEntity> {
     const user = await this.userRepository.findOne(id);
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    await this.userRepository.updateUser(id, updateUserDto);
-    return this.userRepository.findOne(id);
+    const updatedUser = await this.userRepository.updateUser(id, updateUserDto);
+    return updatedUser
   }
 
-  @Admin()
   async remove(id: number) {
     return await this.userRepository.remove(id);
   }

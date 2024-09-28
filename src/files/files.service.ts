@@ -7,7 +7,9 @@ export class FilesService {
     constructor(private readonly filesRepository:FilesRepository,private readonly s3Service:S3Service){}
     async uploadFile(file:Express.Multer.File){
         const fileName = file.originalname?.split(".").slice(0,-1).join(".")
-        const result = await this.s3Service.upload(file,fileName)
+
+        const result = await this.s3Service.upload(file,file.originalname)
+
         const savedFile = await this.filesRepository.save(fileName,result.Location,result.Key,result.Bucket)
 
         return savedFile
@@ -17,7 +19,7 @@ export class FilesService {
         const file = await this.filesRepository.findOne(fileId)
         const protectedUrl = await this.s3Service.getPresignedUrl(file.key,file.bucket)
 
-        file.imageUrl = protectedUrl
+        // file.imageUrl = protectedUrl
 
         return file
     }

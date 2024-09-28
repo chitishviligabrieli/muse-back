@@ -11,6 +11,7 @@ import {
 import { AlbumEntity } from '../../album/entities/album.entity';
 import { ListenersEntity } from '../../listeners/entities/listener.entity';
 import { PlaylistEntity } from '../../playlist/entities/playlist.entity';
+import { FavoritesEntity } from '../../favorites/entities/favorite.entity';
 
 
 @Entity()
@@ -40,6 +41,9 @@ export class MusicEntity {
 
   @OneToMany(() => ListenersEntity, (listener) => listener.music)
   listeners: ListenersEntity[];
+
+  @OneToMany(() => FavoritesEntity, (Favorite) => Favorite.music)
+  favorites: FavoritesEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

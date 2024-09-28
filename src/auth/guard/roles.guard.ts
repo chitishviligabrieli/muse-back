@@ -4,15 +4,27 @@ import { ROLES_KEY } from '../decorators/role.decorator';
 import { JwtService } from '@nestjs/jwt';
 import { IS_ADMIN_KEY } from '../decorators/is-admin.decorator';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
+import { IS_BLOCKED_KEY } from '../decorators/block.decorator';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private readonly jwtService: JwtService,
-  ) {}
+  ) {
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+
+    // const isBlocked = this.reflector.getAllAndOverride<boolean>(IS_BLOCKED_KEY, [
+    //   context.getHandler(),
+    //   context.getClass()
+    // ]);
+    //
+    // if (isBlocked) {
+    //   throw new UnauthorizedException('Your account is blocked');
+    // }
+
     const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
       context.getHandler(),
       context.getClass(),
@@ -32,6 +44,15 @@ export class RolesGuard implements CanActivate {
     try {
       const payload = await this.jwtService.verifyAsync(token);
       request.user = payload;
+
+      const blocked = payload.blocked;
+
+      if (blocked) {
+        if (token) {
+          console.log(token);
+        }
+        throw new UnauthorizedException('Your account is blocked');
+      }
 
       const requiredRoles = this.reflector.getAllAndOverride<string[]>(ROLES_KEY, [
         context.getHandler(),
