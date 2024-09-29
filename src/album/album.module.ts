@@ -4,10 +4,13 @@ import { AlbumController } from './album.controller';
 import { AlbumRepository } from './album.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AlbumEntity } from './entities/album.entity';
-import { FilesRepository } from '../files/files.repository';
+import { FilesModule } from '../files/files.module';  // Import FilesModule
 
 @Module({
-  imports: [TypeOrmModule.forFeature([AlbumEntity, AlbumRepository])],
+  imports: [
+    TypeOrmModule.forFeature([AlbumEntity, AlbumRepository]),
+    FilesModule,  // Add FilesModule here
+  ],
   providers: [AlbumService, AlbumRepository],
   controllers: [AlbumController],
   exports: [AlbumRepository],
