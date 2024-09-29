@@ -21,12 +21,17 @@ export class AuthService {
         if (!isPasswordCorrect) {
             throw new UnauthorizedException('Access denied');
         }
+
+        console.log(user, 'userrrrr')
         const jwtToken = await this.jwtService.signAsync({
             id: user.id,
             email: user.email,
             role: user.role,
+            blocked: user.blocked,
         });
 
-        return { jwtToken };
+        return {
+            access_token: jwtToken
+        };
     }
 }

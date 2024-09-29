@@ -12,6 +12,7 @@ import { AlbumEntity } from '../../album/entities/album.entity';
 import { ListenersEntity } from '../../listeners/entities/listener.entity';
 import { PlaylistEntity } from '../../playlist/entities/playlist.entity';
 import { FavoritesEntity } from '../../favorites/entities/favorite.entity';
+import { FileEntity } from '../../files/entities/file.entity';
 
 
 @Entity()
@@ -23,13 +24,13 @@ export class MusicEntity {
   name: string;
 
   @Column({ type: 'varchar' })
+  src: string
+
+  @Column({ type: 'varchar' })
   artistId: number;
 
   @Column({ type: 'int' })
   duration: number;
-
-  @Column({ type: 'varchar' })
-  file: string;
 
   @ManyToOne(() => AlbumEntity, (album) => album.music)
   @JoinColumn({ name: 'albumId' })
@@ -44,6 +45,9 @@ export class MusicEntity {
 
   @OneToMany(() => FavoritesEntity, (Favorite) => Favorite.music)
   favorites: FavoritesEntity[];
+
+  @ManyToOne(() => FileEntity)
+  file: FileEntity;
 
   @CreateDateColumn()
   createdAt: Date;

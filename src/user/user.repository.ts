@@ -15,8 +15,10 @@ export class UserRepository {
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     const newUser = this.userRepository.create(createUserDto);
     newUser.role = createUserDto.role || RolesEnum.User;
+    newUser.blocked = createUserDto.blocked || false;
     const savedUser = await this.userRepository.save(newUser);
 
+    console.log(savedUser, 'adasdasdadwdadwdadasdq')
     delete savedUser.password;
     return savedUser;
   }
@@ -51,15 +53,13 @@ export class UserRepository {
 
     if (updateUserDto.blocked) {
       user.blocked = updateUserDto.blocked;
-
-      console.log(user.blocked, 'blocked');
     }
 
     return this.userRepository.save(user);
   }
 
   findByEmailAndPassword(email: string) {
-    return this.userRepository.findOne({ where: { email: email }, select: { email: true, password: true, role: true } });
+    return this.userRepository.findOne({ where: { email: email }, select: { email: true, password: true, role: true, blocked: true } });
   }
 
   async remove(id: number) {

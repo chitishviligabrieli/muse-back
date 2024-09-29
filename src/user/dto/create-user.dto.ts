@@ -21,6 +21,6 @@ export class CreateUserDto {
   role?: RolesEnum;
 
   @IsOptional()
-  @IsBoolean()
+  @IsBoolean({message: 'You are blocked'})
   blocked: boolean;
 }

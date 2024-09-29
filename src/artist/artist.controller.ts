@@ -35,8 +35,6 @@ export class ArtistController {
     @Req() req) {
     const { name, biography } = req.body;
 
-    console.log(req.body , 'reqq');
-
     return await this.artistService.create(createArtistDto, req.user, files.image[0], files.cover[0]);
   }
 

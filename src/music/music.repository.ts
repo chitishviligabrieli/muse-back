@@ -10,9 +10,12 @@ export class MusicRepository {
   constructor(@InjectRepository(MusicEntity)
               private readonly musicRepository: Repository<MusicEntity>) { }
 
-  async create(createMusicDto: CreateMusicDto) {
-    const music = this.musicRepository.create(createMusicDto);
-      return await this.musicRepository.save(music);
+  async create(createMusicDto: CreateMusicDto, musicUrl: string) :Promise<MusicEntity> {
+    const newMusic = this.musicRepository.create({
+      ...createMusicDto,
+      src: musicUrl
+    });
+      return await this.musicRepository.save(newMusic);
   }
 
   async searchMusic(value: string): Promise<MusicEntity[]> {

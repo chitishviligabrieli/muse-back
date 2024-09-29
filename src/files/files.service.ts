@@ -19,8 +19,6 @@ export class FilesService {
         const file = await this.filesRepository.findOne(fileId)
         const protectedUrl = await this.s3Service.getPresignedUrl(file.key,file.bucket)
 
-        // file.imageUrl = protectedUrl
-
         return file
     }
 }

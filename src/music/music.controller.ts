@@ -8,12 +8,12 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
-  UseGuards,
+  UseGuards, Req,
 } from '@nestjs/common';
 import { MusicService } from './music.service';
 import { CreateMusicDto } from './dto/create-music.dto';
 import { UpdateMusicDto } from './dto/update-music.dto';
-import { FileInterceptor } from '@nestjs/platform-express';
+import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { Admin } from '../auth/decorators/is-admin.decorator';
 import { RolesGuard } from '../auth/guard/roles.guard';
 
@@ -25,9 +25,11 @@ export class MusicController {
 
   @Admin()
   @Post()
-  @UseInterceptors(FileInterceptor('file'))
-  async create(@Body() createMusicDto: CreateMusicDto, @UploadedFile() file: Express.Multer.File) {
-    return await this.musicService.create({...createMusicDto, file});
+  @UseInterceptors(FileFieldsInterceptor([
+    { name: 'music', maxCount: 1 }
+  ]))
+  async create(@Body() createMusicDto: CreateMusicDto, @UploadedFile() file: {musicUrl?: Express.Multer.File}, @Req() req) {
+    return await this.musicService.create(createMusicDto, req.user, file.musicUrl[0]);
   }
 
   @Get()

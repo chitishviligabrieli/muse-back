@@ -11,14 +11,15 @@ import { FilesService } from '../files/files.service';
 export class ArtistService {
   constructor(private readonly artistRepository: ArtistRepository,
               private readonly fileService: FilesService,
-              ) {}
+  ) {
+  }
 
 
   async create(createArtistDto: CreateArtistDto, artist: {}, Image: Express.Multer.File, Cover: Express.Multer.File): Promise<ArtistEntity> {
-    const uploadedImageUrl = await this.fileService.uploadFile(Image)
-    const uploadedCoverUrl = await  this.fileService.uploadFile(Cover)
+    const uploadedImageUrl = await this.fileService.uploadFile(Image);
+    const uploadedCoverUrl = await this.fileService.uploadFile(Cover);
 
-      return await this.artistRepository.create(createArtistDto, uploadedImageUrl.url, uploadedCoverUrl.url);
+    return await this.artistRepository.create(createArtistDto, uploadedImageUrl.url, uploadedCoverUrl.url);
   }
 
   async findAll(): Promise<ArtistEntity[]> {
