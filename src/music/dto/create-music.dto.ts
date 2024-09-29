@@ -6,9 +6,6 @@ export class CreateMusicDto {
     musicTitle: string
 
     @IsString()
-    file?:any
-
-    @IsString()
     artistName: string
 
     @IsString()

@@ -2,20 +2,24 @@ import { Injectable } from '@nestjs/common';
 import { CreateMusicDto } from './dto/create-music.dto';
 import { UpdateMusicDto } from './dto/update-music.dto';
 import { MusicRepository } from './music.repository';
-import { Admin } from '../auth/decorators/is-admin.decorator';
-import { FileEntity } from '../files/entities/file.entity';
+import { FilesService } from '../files/files.service';
+import { AlbumEntity } from '../album/entities/album.entity';
+import { MusicEntity } from './entities/music.entity';
 
 @Injectable()
 export class MusicService {
 
-  constructor(private readonly musicRepository: MusicRepository) { }
+  constructor(private readonly musicRepository: MusicRepository,
+              private readonly fileService: FilesService,) {
+  }
 
-  async create(createMusicDto: CreateMusicDto) {
-    const  music = await this.musicRepository.create(createMusicDto);
+  async create(createMusicDto: CreateMusicDto, music: {}, musicUrl: Express.Multer.File): Promise<MusicEntity> {
+    const uploadMusic = await this.fileService.uploadFile(musicUrl);
+    return await this.musicRepository.create(createMusicDto, uploadMusic.url)
   }
 
   async findAll() {
-    return await this.musicRepository.findAll()
+    return await this.musicRepository.findAll();
   }
 
   async findOne(id: number) {

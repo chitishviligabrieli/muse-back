@@ -18,9 +18,12 @@ export class AlbumRepository {
       .getMany();
   }
 
-  async create(createAlbumDto: CreateAlbumDto) {
-    const newProduct = this.albumRepository.create(createAlbumDto);
-    return await this.albumRepository.save(newProduct);
+  async create(createAlbumDto: CreateAlbumDto, albumImg: string): Promise<AlbumEntity> {
+    const newAlbum = this.albumRepository.create({
+      ...createAlbumDto,
+      image: albumImg
+    });
+    return await this.albumRepository.save(newAlbum);
   }
 
   async findAll() {

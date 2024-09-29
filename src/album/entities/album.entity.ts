@@ -9,6 +9,7 @@ import {
 } from 'typeorm';
 import { ArtistEntity } from '../../artist/entities/artist.entity';
 import { MusicEntity } from '../../music/entities/music.entity';
+import { FileEntity } from '../../files/entities/file.entity';
 
 @Entity()
 export class AlbumEntity {
@@ -33,6 +34,9 @@ export class AlbumEntity {
 
     @OneToMany(() => MusicEntity, (music) => music.album)
     music:MusicEntity[];
+
+    @ManyToOne(() => FileEntity)
+    file: FileEntity;
 
     @ManyToOne(() => ArtistEntity, (artist) => artist.album)
     @JoinColumn({ name: 'artistId' })

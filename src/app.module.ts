@@ -12,17 +12,13 @@ import { ConfigModule } from '@nestjs/config';
 import * as process from 'node:process';
 import { AuthModule } from './auth/auth.module';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstant } from './auth/constants';
 import { FilesModule } from './files/files.module';
 import { AwsModule } from './aws/aws.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/guard/roles.guard';
 import { PlaylistModule } from './playlist/playlist.module';
-import { PlaylistEntity } from './playlist/entities/playlist.entity';
-import { MusicEntity } from './music/entities/music.entity';
 import { FavoritesModule } from './favorites/favorites.module';
-import { SearchModule } from './search/search.module';
-
+import { BlockGuard } from './auth/guard/block.guard';
 
 @Module({
   imports: [
@@ -51,14 +47,17 @@ import { SearchModule } from './search/search.module';
     AwsModule,
     PlaylistModule,
     FavoritesModule,
-    // SearchModule
   ],
   controllers: [AppController],
   providers: [HashingService, AppService,
     {
     provide: APP_GUARD,
     useClass: RolesGuard,
-  }
+  },
+    {
+      provide: APP_GUARD,
+      useClass: BlockGuard,
+    }
   ],
 })
 export class AppModule {}
