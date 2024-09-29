@@ -5,17 +5,22 @@ import {
 } from 'typeorm';
 import { UserEntity } from '../../user/entities/user.entity';
 import { MusicEntity } from '../../music/entities/music.entity';
+
 @Entity()
 export class FavoritesEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
+
   @ManyToOne(() => UserEntity, (user) => user.favorites)
-  user: UserEntity;
+  user: UserEntity[];
 
   @ManyToOne(() => MusicEntity, (music) => music.favorites)
-  music: MusicEntity;
+  music: MusicEntity[];
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @DeleteDateColumn()
+  deletedAt?: Date;
 }

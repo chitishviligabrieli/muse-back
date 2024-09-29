@@ -16,11 +16,11 @@ export class FavoritesRepository {
   }
 
   async findAll(): Promise<FavoritesEntity[]> {
-    return await this.favoritesRepository.find();
+    return await this.favoritesRepository.find({ where: { deletedAt: null } });
   }
-
+  
   async findOne(id: number): Promise<FavoritesEntity> {
-    return await this.favoritesRepository.findOne({ where: { id } });
+    return await this.favoritesRepository.findOne({ where: { id, deletedAt: null } });
   }
 
   async remove(id: number): Promise<void> {

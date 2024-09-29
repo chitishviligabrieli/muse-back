@@ -2,11 +2,13 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { FavoritesService } from './favorites.service';
 import { CreateFavoriteDto } from './dto/create-favorite.dto';
 import { UpdateFavoriteDto } from './dto/update-favorite.dto';
+import { Public } from 'src/auth/decorators/public.decorator';
 
 @Controller('favorites')
 export class FavoritesController {
   constructor(private readonly favoritesService: FavoritesService) {}
 
+  @Public()
   @Post()
   create(@Body() createFavoriteDto: CreateFavoriteDto) {
     return this.favoritesService.create(createFavoriteDto);
@@ -26,9 +28,12 @@ export class FavoritesController {
   update(@Param('id') id: string, @Body() updateFavoriteDto: UpdateFavoriteDto) {
     return this.favoritesService.update(+id, updateFavoriteDto);
   }
-
+  @Public()
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.favoritesService.remove(+id);
+    return this.favoritesService.remove(+id); 
   }
+  
 }
+
+
