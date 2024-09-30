@@ -16,12 +16,15 @@ export class AuthService {
     async loginUser(data: LoginUserDto) {
         const user = await this.userRepo.findByEmailAndPassword(data.email);
         if (!user) {
-            throw new UnauthorizedException('Access denied');
+            throw new UnauthorizedException('Access denieddddddddddddd');
         }
 
         const isPasswordCorrect = await bcrypt.compare(data.password, user.password);
+        console.log(data.password, "data password")
+        console.log(user.password, 'user.password')
+        console.log(isPasswordCorrect, "isPasswordCorrect")
         if (!isPasswordCorrect) {
-            throw new UnauthorizedException('Access denied');
+            throw new UnauthorizedException('AAAAAAAAAAAAAAccess denied');
         }
 
         // console.log(user, 'userrrrr')
