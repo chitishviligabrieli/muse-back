@@ -5,11 +5,13 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { RolesEnum } from '../auth/role/role';
+import { HashingService } from './hashing.service';
 
 @Injectable()
 export class UserRepository {
   constructor(@InjectRepository(UserEntity)
-              private readonly userRepository: Repository<UserEntity>) {
+              private readonly userRepository: Repository<UserEntity>,
+              private readonly hashingService: HashingService,) {
   }
 
   async create(createUserDto: CreateUserDto): Promise<UserEntity> {
@@ -53,6 +55,12 @@ export class UserRepository {
 
     if (updateUserDto.blocked) {
       user.blocked = updateUserDto.blocked;
+    }
+
+    if(updateUserDto.password) {
+      console.log(updateUserDto.password)
+      const hashedPassword = await this.hashingService.hashPassword(updateUserDto.password);
+      user.password = hashedPassword;
     }
 
     return this.userRepository.save(user);
