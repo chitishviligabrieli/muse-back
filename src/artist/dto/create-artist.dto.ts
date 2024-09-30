@@ -1,7 +1,8 @@
-import { IsString, IsNotEmpty } from 'class-validator';
+import { IsString, IsNotEmpty, IsNumber } from 'class-validator';
 
 
 export class CreateArtistDto {
+
     @IsString()
     @IsNotEmpty()
     name: string;
@@ -9,5 +10,4 @@ export class CreateArtistDto {
     @IsString()
     @IsNotEmpty()
     biography: string;
-
 }

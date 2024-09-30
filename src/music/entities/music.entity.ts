@@ -26,9 +26,6 @@ export class MusicEntity {
   @Column({ type: 'varchar' })
   src: string
 
-  @Column({ type: 'varchar' })
-  artistId: number;
-
   @Column({ type: 'int' })
   duration: number;
 
@@ -57,6 +54,4 @@ export class MusicEntity {
 
   @DeleteDateColumn()
   deletedAt: Date;
-
-
 }

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { createQueryBuilder, Repository } from 'typeorm';
 import { ArtistEntity } from './entities/artist.entity';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
@@ -10,7 +10,8 @@ export class ArtistRepository {
   constructor(
     @InjectRepository(ArtistEntity)
     private readonly artistRepository: Repository<ArtistEntity>,
-  ) {}
+  ) {
+  }
 
   async searchArtists(value: string): Promise<ArtistEntity[]> {
     return this.artistRepository
@@ -27,6 +28,8 @@ export class ArtistRepository {
       image: ImageUrl,
       cover: CoverUrl,
     });
+
+    console.log(newArtist, 'imageurl');
     return await this.artistRepository.save(newArtist);
   }
 
@@ -34,12 +37,16 @@ export class ArtistRepository {
     return await this.artistRepository.find();
   }
 
-  async findOne(id: number): Promise<ArtistEntity> {
-    return await this.artistRepository.findOne({ where: { id } });
+  async findOne(id: number) {
+    return  this.artistRepository
+      .createQueryBuilder('artist')
+      .where('artist.id= :id', { id })
+      .leftJoinAndSelect('artist.album', 'album')
+      .getOne()
   }
 
   async update(id: number, data: UpdateArtistDto): Promise<ArtistEntity> {
-    await this.artistRepository.update(id, data,);
+    await this.artistRepository.update(id, data);
     return await this.artistRepository.findOne({ where: { id } });
   }
 

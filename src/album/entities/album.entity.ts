@@ -23,11 +23,8 @@ export class AlbumEntity {
     @Column({ type: 'varchar' })
     releaseDate: string;
 
-    @Column({ type: 'int' })
-    artistId: number;
-
     @Column({type: 'varchar'})
-    image: string;
+    albumImg: string;
 
     @OneToMany(() => MusicEntity, (music) => music.album)
     music:MusicEntity[];
@@ -36,8 +33,7 @@ export class AlbumEntity {
     file: FileEntity;
 
     @ManyToOne(() => ArtistEntity, (artist) => artist.album)
-    @JoinColumn({ name: 'artistId' })
-    artist:ArtistEntity[];
+    artist:ArtistEntity;
 
     @CreateDateColumn()
     createdAt: Date;

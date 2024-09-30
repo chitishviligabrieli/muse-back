@@ -24,20 +24,18 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
-    console.log(isPublic, 'ispublic');
+    // console.log(isPublic, 'ispublic');
 
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    console.log(token, 'tokennnnnnnnnnnnn');
+    // console.log(token, 'tokennnnnnnnnnnnn');
 
 
     try {
       if (!token) {
         throw new UnauthorizedException('Token not found');
-
       }
-      console.log(12);
       const payload = await this.jwtService.verifyAsync(token);
       request.user = payload;
 

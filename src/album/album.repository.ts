@@ -21,15 +21,17 @@ export class AlbumRepository {
   async create(createAlbumDto: CreateAlbumDto, albumImg: string): Promise<AlbumEntity> {
     const newAlbum = this.albumRepository.create({
       ...createAlbumDto,
-      image: albumImg
+      albumImg: albumImg
     });
-    console.log("repository")
+
+    console.log(newAlbum, "reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeepository")
     return await this.albumRepository.save(newAlbum);
   }
 
   async findAll() {
     return await this.albumRepository
       .createQueryBuilder('album')
+      .leftJoinAndSelect('album.music','music')
       .getMany();
   }
 

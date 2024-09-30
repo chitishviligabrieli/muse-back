@@ -19,16 +19,20 @@ import { RolesGuard } from '../auth/guard/roles.guard';
 
 @Controller('music')
 export class MusicController {
-  constructor(private readonly musicService: MusicService) {}
-
+  constructor(private readonly musicService: MusicService) {
+  }
 
 
   @Admin()
   @Post()
   @UseInterceptors(FileFieldsInterceptor([
-    { name: 'music', maxCount: 1 }
+    { name: 'music', maxCount: 1 },
   ]))
-  async create(@Body() createMusicDto: CreateMusicDto, @UploadedFile() file: {musicUrl?: Express.Multer.File}, @Req() req) {
+  async create(
+    @Body() createMusicDto: CreateMusicDto,
+    @UploadedFile() file: { musicUrl?: Express.Multer.File },
+    @Req() req) {
+    const{name, duration} = req.body;
     return await this.musicService.create(createMusicDto, req.user, file.musicUrl[0]);
   }
 
