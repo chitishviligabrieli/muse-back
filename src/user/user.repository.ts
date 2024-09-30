@@ -18,7 +18,7 @@ export class UserRepository {
     newUser.blocked = createUserDto.blocked || false;
     const savedUser = await this.userRepository.save(newUser);
 
-    console.log(savedUser, 'adasdasdadwdadwdadasdq')
+    // console.log(savedUser, 'adasdasdadwdadwdadasdq')
     delete savedUser.password;
     return savedUser;
   }

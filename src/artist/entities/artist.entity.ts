@@ -14,7 +14,7 @@ import { FileEntity } from '../../files/entities/file.entity';
 export class ArtistEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
+  //
   @Column({ type: 'varchar' })
   name: string;
 

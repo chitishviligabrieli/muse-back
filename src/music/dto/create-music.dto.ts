@@ -1,21 +1,13 @@
-import { IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsNotEmpty, IsNumber, IsString, Max, Min } from 'class-validator';
 
 export class CreateMusicDto {
     @IsString()
     @IsNotEmpty()
-    musicTitle: string
-
-    @IsString()
-    artistName: string
-
-    @IsString()
-    src: string
+    name: string
 
     @IsNumber()
     @IsNotEmpty()
-    artistId: number;
-
-    @IsNumber()
-    @IsNotEmpty()
+    @Min(1)  // The minimum value for duration, assuming it's in seconds.
+    @Max(600)
     duration: number;
 }

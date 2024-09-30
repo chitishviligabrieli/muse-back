@@ -1,10 +1,7 @@
-import { IsArray, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsArray, IsNotEmpty, isNumber, IsNumber, IsString, Min } from 'class-validator';
 import { CreateMusicDto } from "src/music/dto/create-music.dto";
 
 export class CreateAlbumDto {
-
-    @IsString()
-    image: string
 
     @IsString()
     @IsNotEmpty()
@@ -14,14 +11,6 @@ export class CreateAlbumDto {
     @IsNotEmpty()
     releaseDate: string
 
-    @IsString()
-    subtitle: string
-
-    @IsArray()
-    @IsNotEmpty()
-    musics: CreateMusicDto[]
-
     @IsNumber()
-    @IsNotEmpty()
-    artistId:number
+    artistId: number;
 }

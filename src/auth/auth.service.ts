@@ -24,7 +24,7 @@ export class AuthService {
             throw new UnauthorizedException('Access denied');
         }
 
-        console.log(user, 'userrrrr')
+        // console.log(user, 'userrrrr')
         const jwtToken = await this.jwtService.signAsync({
             id: user.id,
             email: user.email,

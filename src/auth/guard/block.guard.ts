@@ -32,12 +32,12 @@ export class BlockGuard implements CanActivate {
 
     request['user'] = payload;
 
-    console.log(payload, "payload")
+    // console.log(payload, "payload")
 
-    console.log(token,  "token")
+    // console.log(token,  "token")
     const decodedToken = this.jwtService.decode(token);
 
-    console.log(decodedToken.blocked, 'decodedToken');
+    // console.log(decodedToken.blocked, 'decodedToken');
 
 
     try {
