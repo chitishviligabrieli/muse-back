@@ -10,7 +10,8 @@ export class RolesGuard implements CanActivate {
   constructor(
     private reflector: Reflector,
     private readonly jwtService: JwtService,
-  ) {}
+  ) {
+  }
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
 
@@ -23,16 +24,20 @@ export class RolesGuard implements CanActivate {
       return true;
     }
 
+    console.log(isPublic, 'ispublic');
+
 
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
-    console.log(token,  "tokennnnnnnnnnnnn")
+    console.log(token, 'tokennnnnnnnnnnnn');
 
-    if (!token) {
-      throw new UnauthorizedException('Token not found');
-    }
 
     try {
+      if (!token) {
+        throw new UnauthorizedException('Token not found');
+
+      }
+      console.log(12);
       const payload = await this.jwtService.verifyAsync(token);
       request.user = payload;
 

@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { ValidationPipe } from '@nestjs/common';
 import "dotenv/config";
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface';
+import { RolesGuard } from './auth/guard/roles.guard';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -19,7 +20,7 @@ async function bootstrap() {
 
   app.enableCors(corsOptions);
 
-  await app.listen(3001);
+  await app.listen(3000);
 }
 
 bootstrap();

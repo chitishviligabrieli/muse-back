@@ -14,7 +14,10 @@ export class AlbumController {
   @Post()
   async create(@Body() createAlbumDto: CreateAlbumDto, @UploadedFiles() file: {albumImg?: Express.Multer.File}, @Req() req) {
 
+    console.log("posted.controler")
+
     return await this.albumService.create(createAlbumDto, req.user, file.albumImg[0]);
+
   }
 
   @Get()

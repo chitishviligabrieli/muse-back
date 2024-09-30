@@ -23,6 +23,7 @@ export class AlbumRepository {
       ...createAlbumDto,
       image: albumImg
     });
+    console.log("repository")
     return await this.albumRepository.save(newAlbum);
   }
 

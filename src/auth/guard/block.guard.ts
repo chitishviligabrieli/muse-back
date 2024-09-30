@@ -3,6 +3,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Reflector } from '@nestjs/core';
 import { ROLES_KEY } from '../decorators/role.decorator';
 import { IS_BLOCKED_KEY } from '../decorators/block.decorator';
+import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 
 @Injectable()
 export class BlockGuard implements CanActivate {
@@ -14,6 +15,16 @@ export class BlockGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<any> {
     const request = context.switchToHttp().getRequest();
+
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass(),
+    ]);
+
+
+    if (isPublic) {
+      return true;
+    }
 
     const token = this.extractTokenFromHeader(request);
 
@@ -30,7 +41,6 @@ export class BlockGuard implements CanActivate {
 
 
     try {
-
       const blocked = this.reflector.getAllAndOverride<string[]>(IS_BLOCKED_KEY, [
         context.getHandler(),
         context.getClass(),
