@@ -21,9 +21,6 @@ export class AlbumEntity {
     title: string;
 
     @Column({ type: 'varchar' })
-    subtitle: string;
-
-    @Column({ type: 'varchar' })
     releaseDate: string;
 
     @Column({ type: 'int' })

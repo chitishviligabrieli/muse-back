@@ -3,6 +3,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { UserRepository } from 'src/user/user.repository';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { Public } from './decorators/public.decorator';
 
 @Injectable()
 export class AuthService {
@@ -10,6 +11,7 @@ export class AuthService {
       private readonly userRepo: UserRepository,
       private readonly jwtService: JwtService
     ) {}
+
 
     async loginUser(data: LoginUserDto) {
         const user = await this.userRepo.findByEmailAndPassword(data.email);
@@ -29,7 +31,6 @@ export class AuthService {
             role: user.role,
             blocked: user.blocked,
         });
-
         return {
             access_token: jwtToken
         };

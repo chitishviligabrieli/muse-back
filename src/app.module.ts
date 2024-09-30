@@ -51,13 +51,14 @@ import { BlockGuard } from './auth/guard/block.guard';
   controllers: [AppController],
   providers: [HashingService, AppService,
     {
-    provide: APP_GUARD,
-    useClass: RolesGuard,
-  },
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
     {
       provide: APP_GUARD,
       useClass: BlockGuard,
-    }
+    },
   ],
 })
-export class AppModule {}
+export class AppModule {
+}
