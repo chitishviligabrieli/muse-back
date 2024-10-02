@@ -11,7 +11,6 @@ export class FavoritesEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-
   @ManyToOne(() => UserEntity, (user) => user.favorites)
   user: UserEntity[];
 

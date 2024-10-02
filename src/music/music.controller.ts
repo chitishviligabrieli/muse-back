@@ -8,14 +8,13 @@ import {
   Delete,
   UseInterceptors,
   UploadedFile,
-  UseGuards, Req,
+  Req, UploadedFiles,
 } from '@nestjs/common';
 import { MusicService } from './music.service';
 import { CreateMusicDto } from './dto/create-music.dto';
 import { UpdateMusicDto } from './dto/update-music.dto';
 import { FileFieldsInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { Admin } from '../auth/decorators/is-admin.decorator';
-import { RolesGuard } from '../auth/guard/roles.guard';
 
 @Controller('music')
 export class MusicController {
@@ -25,15 +24,24 @@ export class MusicController {
 
   @Admin()
   @Post()
-  @UseInterceptors(FileFieldsInterceptor([
-    { name: 'music', maxCount: 1 },
-  ]))
+  @UseInterceptors(FileFieldsInterceptor([{name:"music", maxCount: 1}]))
   async create(
     @Body() createMusicDto: CreateMusicDto,
-    @UploadedFile() file: { musicUrl?: Express.Multer.File },
+    @UploadedFiles() files: {
+      music: Express.Multer.File },
     @Req() req) {
-    const{name, duration} = req.body;
-    return await this.musicService.create(createMusicDto, req.user, file.musicUrl[0]);
+
+    const { name, duration, albumId } = req.body;
+
+    const id = req.body.albumId
+
+    req.body.albumId = Number(id)
+
+    if (!files) {
+      throw new Error('No file uploaded. Check if the field in Postman is "music".');
+    }
+    console.log(createMusicDto , 'createmUisccccccccccccccccccc')
+    return await this.musicService.create(createMusicDto, req.user, files.music[0]);
   }
 
   @Get()

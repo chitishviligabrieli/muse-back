@@ -52,10 +52,9 @@ export class UserRepository {
     if (updateUserDto.role) {
       user.role = updateUserDto.role;
     }
-
-    if (updateUserDto.blocked) {
+    console.log(updateUserDto.blocked)
       user.blocked = updateUserDto.blocked;
-    }
+
 
     if(updateUserDto.password) {
       console.log(updateUserDto.password)

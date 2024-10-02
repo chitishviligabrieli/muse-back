@@ -16,7 +16,11 @@ export class FavoritesRepository {
   }
 
   async findAll(): Promise<FavoritesEntity[]> {
-    return await this.favoritesRepository.find({ where: { deletedAt: null } });
+    console.log('asdasdasdads')
+    return await this.favoritesRepository
+      .createQueryBuilder('favorites')
+      .leftJoinAndSelect('favorites.user','user')
+      .getMany();
   }
   
   async findOne(id: number): Promise<FavoritesEntity> {

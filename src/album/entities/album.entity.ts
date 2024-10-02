@@ -26,6 +26,9 @@ export class AlbumEntity {
     @Column({type: 'varchar'})
     albumImg: string;
 
+    @Column({ type: 'int' })
+    artistId: number;
+
     @OneToMany(() => MusicEntity, (music) => music.album)
     music:MusicEntity[];
 

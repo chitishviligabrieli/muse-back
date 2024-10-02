@@ -9,6 +9,8 @@ import {
 import { ListenersEntity } from '../../listeners/entities/listener.entity';
 import { RolesEnum } from '../../auth/role/role';
 import { FavoritesEntity } from '../../favorites/entities/favorite.entity';
+import { MusicEntity } from '../../music/entities/music.entity';
+import { PlaylistEntity } from '../../playlist/entities/playlist.entity';
 
 @Entity()
 export class UserEntity {
@@ -32,6 +34,9 @@ export class UserEntity {
 
   @OneToMany(() => FavoritesEntity, (favorite) => favorite.user)
   favorites: FavoritesEntity[];
+
+  @OneToMany(() => PlaylistEntity, (playlist) => playlist.user)
+  playlist: PlaylistEntity[];
 
   @CreateDateColumn()
   createdAt: Date;

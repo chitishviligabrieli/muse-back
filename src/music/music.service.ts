@@ -13,8 +13,10 @@ export class MusicService {
               private readonly fileService: FilesService,) {
   }
 
-  async create(createMusicDto: CreateMusicDto, music: {}, musicUrl: Express.Multer.File): Promise<MusicEntity> {
-    const uploadMusic = await this.fileService.uploadFile(musicUrl);
+  async create(createMusicDto: CreateMusicDto, music: {}, MusicSrc: Express.Multer.File): Promise<MusicEntity> {
+    const uploadMusic = await this.fileService.uploadFile(MusicSrc);
+    const albumId = createMusicDto.albumId;
+    createMusicDto.albumId = Number(albumId)
     return await this.musicRepository.create(createMusicDto, uploadMusic.url)
   }
 

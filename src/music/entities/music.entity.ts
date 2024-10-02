@@ -24,13 +24,12 @@ export class MusicEntity {
   name: string;
 
   @Column({ type: 'varchar' })
-  src: string
+  musicSrc: string
 
-  @Column({ type: 'int' })
-  duration: number;
+  @Column({nullable: true})
+  albumId!: number;
 
   @ManyToOne(() => AlbumEntity, (album) => album.music)
-  @JoinColumn({ name: 'albumId' })
   album: AlbumEntity[];
 
   @ManyToMany(() => PlaylistEntity, (playlist) => playlist.music)

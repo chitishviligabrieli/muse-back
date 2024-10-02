@@ -13,12 +13,16 @@ export class AlbumService {
               private readonly fileService: FilesService) {
   }
 
-  async create(createMusicDto: CreateAlbumDto, album: {}, AlbumImg: Express.Multer.File): Promise<AlbumEntity> {
+  async create(createAlbumDto: CreateAlbumDto, album: {}, AlbumImg: Express.Multer.File): Promise<AlbumEntity> {
     console.log(AlbumImg, "AlbumImg, service")
     const uploadAlbumImg = await this.fileService.uploadFile(AlbumImg)
 
     console.log( uploadAlbumImg, 'uploadAlbumImg');
-    return await this.albumRepository.create(createMusicDto, uploadAlbumImg.url);
+    const artistId = createAlbumDto.artistId;
+    createAlbumDto.artistId = Number(artistId)
+
+    console.log( createAlbumDto, "createAlbumDto");
+    return await this.albumRepository.create(createAlbumDto, uploadAlbumImg.url);
   }
 
   async findAll() {

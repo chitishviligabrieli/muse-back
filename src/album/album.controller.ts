@@ -11,18 +11,23 @@ export class AlbumController {
   }
 
   @Admin()
-
   @Post()
   @UseInterceptors(FileFieldsInterceptor([
     { name: 'album', maxCount: 1 },
   ]))
   async create(
     @Body() createAlbumDto: CreateAlbumDto,
-    @UploadedFiles() file: { album: Express.Multer.File },
+    @UploadedFiles() files: { album: Express.Multer.File},
     @Req() req) {
-    const { titile, releaseDate } = req.body;
-+
-    console.log(file.album, 'files.album');
+    const { titile, releaseDate, artistId } = req.body;
+
+    const id = req.body.artistId
+
+    req.body.artistId = Number(id)
+
+    console.log(req.body, "req.body")
+
+    console.log(files, 'files.album');
     // [
       //   {
       //     fieldname: 'album',
@@ -33,10 +38,10 @@ export class AlbumController {
       //     size: 51814
       //   }
     // ] files.album
-    console.log(file.album[0].originalname, 'files.album[0].originalname');
+    console.log(files.album[0].originalname, 'files.album[0].originalname');
     // Screenshot 2024-08-22 175225.png files.album[0].originalname
 
-    return await this.albumService.create(createAlbumDto, req.user, file.album[0]);
+    return await this.albumService.create(createAlbumDto, req.user, files.album[0]);
 
   }
 
