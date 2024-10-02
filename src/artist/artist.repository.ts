@@ -16,8 +16,7 @@ export class ArtistRepository {
   async searchArtists(value: string): Promise<ArtistEntity[]> {
     return this.artistRepository
       .createQueryBuilder('artist')
-      .where('artist.firstName LIKE :value', { value: `%${value}%` })
-      .orWhere('artist.lastName LIKE :value', { value: `%${value}%` })
+      .where('artist.name LIKE :value', { value: `%${value}%` })
       .orWhere('artist.biography LIKE :value', { value: `%${value}%` })
       .getMany();
   }

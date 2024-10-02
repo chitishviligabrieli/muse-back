@@ -19,6 +19,7 @@ import { RolesGuard } from './auth/guard/roles.guard';
 import { PlaylistModule } from './playlist/playlist.module';
 import { FavoritesModule } from './favorites/favorites.module';
 import { BlockGuard } from './auth/guard/block.guard';
+import { SearchModule } from './search/search.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { BlockGuard } from './auth/guard/block.guard';
     AwsModule,
     PlaylistModule,
     FavoritesModule,
+    SearchModule
   ],
   controllers: [AppController],
   providers: [HashingService, AppService,
