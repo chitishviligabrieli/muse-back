@@ -32,7 +32,7 @@ export class MusicEntity {
   @ManyToOne(() => AlbumEntity, (album) => album.music)
   album: AlbumEntity[];
 
-  @ManyToMany(() => PlaylistEntity, (playlist) => playlist.music)
+  @ManyToMany(() => PlaylistEntity, (playlist) => playlist.musics)
   @JoinTable()
   playlists: PlaylistEntity[];
 

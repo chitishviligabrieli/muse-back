@@ -3,6 +3,7 @@ import { Admin } from '../auth/decorators/is-admin.decorator';
 import { PlaylistRepository } from './playlist.repository';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
+import { PlaylistEntity } from './entities/playlist.entity';
 
 @Injectable()
 export class PlaylistService {
@@ -11,8 +12,8 @@ export class PlaylistService {
   }
 
   @Admin()
-  async create(createPlaylistDto: CreatePlaylistDto) {
-    return await this.playlistRepository.create(createPlaylistDto);
+  async create(createPlaylistDto: CreatePlaylistDto, userId: number): Promise<PlaylistEntity> {
+    return await this.playlistRepository.create(createPlaylistDto, userId);
   }
 
   async findAll() {
@@ -31,5 +32,13 @@ export class PlaylistService {
   @Admin()
   async remove(id: number) {
     return await this.playlistRepository.remove(id);
+  }
+
+  async addMusic(playlistId: number, musicId: number): Promise<PlaylistEntity> {
+    return this.playlistRepository.addMusic(playlistId, musicId);
+  }
+
+  async deleteMusic(playlistId: number, musicId: number): Promise<PlaylistEntity> {
+    return this.playlistRepository.deleteMusic(playlistId, musicId);
   }
 }

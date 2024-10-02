@@ -18,10 +18,10 @@ export class PlaylistEntity {
   name: string;
 
   @ManyToMany(() => MusicEntity, (music) => music.playlists)
-  music: MusicEntity[];
+  musics: MusicEntity[];
 
-  @ManyToOne(() => UserEntity, (user) => user.playlist)
-  user: UserEntity[];
+  @ManyToOne(() => UserEntity, (user) => user.playlist, {onDelete: 'CASCADE'})
+  user: UserEntity;
 
   @CreateDateColumn()
   createdAt: Date;
