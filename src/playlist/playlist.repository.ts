@@ -24,7 +24,7 @@ export class PlaylistRepository {
     ): Promise<PlaylistEntity> {
     const newPlaylist = this.playlistRepository.create({
       name: createPlaylistDto.name,
-      musics: createPlaylistDto.musics || [],
+      music: createPlaylistDto.music || [],
       user: {id: userId}
     });
     return await this.playlistRepository.save(newPlaylist);
@@ -32,7 +32,7 @@ export class PlaylistRepository {
 
   async findAll(): Promise<PlaylistEntity[]> {
     return await this.playlistRepository.createQueryBuilder('playlist')
-      .leftJoinAndSelect('playlist.musics', 'music')
+      .leftJoinAndSelect('playlist.music', 'music')
       .leftJoinAndSelect('music.artist', 'artist')
       .leftJoinAndSelect('playlist.user', 'user')
       .leftJoinAndSelect('music.album', 'album')
@@ -41,7 +41,7 @@ export class PlaylistRepository {
 
   async findOne(id: number): Promise<PlaylistEntity> {
     const playlist = await this.playlistRepository.createQueryBuilder('playlist')
-      .leftJoinAndSelect('playlist.musics', 'music')
+      .leftJoinAndSelect('playlist.music', 'music')
       .leftJoinAndSelect('music.artist', 'artist')
       .where('playlist.id = :id', { id })
       .getOne();
@@ -58,7 +58,7 @@ export class PlaylistRepository {
   async addMusic(id: number, musicId: number): Promise<PlaylistEntity> {
     const playlist  = await this.playlistRepository.findOne({
       where: { id },
-      relations: ['musics'],
+      relations: ['music'],
     });
 
     const music = await this.musicrepository.findOne(musicId);
@@ -70,10 +70,10 @@ export class PlaylistRepository {
       throw new Error('Music not found');
     }
 
-    const hasMusic = playlist.musics.some(m => m.id === musicId);
+    const hasMusic = playlist.music.some(m => m.id === musicId);
 
     if (!hasMusic) {
-      playlist.musics.push(music);
+      playlist.music.push(music);
       return await this.playlistRepository.save(playlist);
     } else {
       throw  new HttpException('Music already exists in the playlist' , HttpStatus.INTERNAL_SERVER_ERROR);
@@ -83,20 +83,20 @@ export class PlaylistRepository {
   async deleteMusic(id: number, musicId: number): Promise<PlaylistEntity> {
     const playlist = await this.playlistRepository.findOne({
       where: { id },
-      relations: ['musics'],
+      relations: ['music'],
     });
 
     if (!playlist) {
       throw new Error('Playlist not found');
     }
 
-    const music = playlist.musics.find(m => m.id === musicId);
+    const music = playlist.music.find(m => m.id === musicId);
 
     if (!music) {
       throw new Error('Music not found in the playlist');
     }
 
-    playlist.musics = playlist.musics.filter(m => m.id !== musicId);
+    playlist.music = playlist.music.filter(m => m.id !== musicId);
 
     return await this.playlistRepository.save(playlist);
   }
@@ -104,7 +104,7 @@ export class PlaylistRepository {
   async update(
     id: number,
     updatePlaylistDto: UpdatePlaylistDto,
-    musics: MusicEntity[] = [],
+    music: MusicEntity[] = [],
   ): Promise<PlaylistEntity> {
     const existingPlaylist = await this.findOne(id);
     if (!existingPlaylist) {
@@ -115,7 +115,7 @@ export class PlaylistRepository {
       ...existingPlaylist,
       playlistName: updatePlaylistDto.name ?? existingPlaylist.name,
 
-      musics: musics.length > 0 ? musics : existingPlaylist.musics,
+      music: music.length > 0 ? music : existingPlaylist.music,
     };
 
     return await this.playlistRepository.save(updatedPlaylist);

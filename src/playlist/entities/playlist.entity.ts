@@ -18,7 +18,7 @@ export class PlaylistEntity {
   name: string;
 
   @ManyToMany(() => MusicEntity, (music) => music.playlists)
-  musics: MusicEntity[];
+  music: MusicEntity[];
 
   @ManyToOne(() => UserEntity, (user) => user.playlist, {onDelete: 'CASCADE'})
   user: UserEntity;

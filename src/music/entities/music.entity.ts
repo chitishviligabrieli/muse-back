@@ -13,6 +13,7 @@ import { ListenersEntity } from '../../listeners/entities/listener.entity';
 import { PlaylistEntity } from '../../playlist/entities/playlist.entity';
 import { FavoritesEntity } from '../../favorites/entities/favorite.entity';
 import { FileEntity } from '../../files/entities/file.entity';
+import { ArtistEntity } from '../../artist/entities/artist.entity';
 
 
 @Entity()
@@ -32,9 +33,16 @@ export class MusicEntity {
   @ManyToOne(() => AlbumEntity, (album) => album.music)
   album: AlbumEntity[];
 
-  @ManyToMany(() => PlaylistEntity, (playlist) => playlist.musics)
+  @Column({ type: 'int' })
+  artistId: number;
+
+  @ManyToMany(() => PlaylistEntity, (playlist) => playlist.music)
   @JoinTable()
   playlists: PlaylistEntity[];
+
+  @ManyToOne(() => ArtistEntity, (artist) => artist.music, { cascade: true })
+  @JoinColumn({ name: 'artistId' })
+  artist: ArtistEntity;
 
   @OneToMany(() => ListenersEntity, (listener) => listener.music)
   listeners: ListenersEntity[];

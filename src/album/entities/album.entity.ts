@@ -35,7 +35,7 @@ export class AlbumEntity {
     @ManyToOne(() => FileEntity)
     file: FileEntity;
 
-    @ManyToOne(() => ArtistEntity, (artist) => artist.album)
+    @ManyToOne(() => ArtistEntity, (artist) => artist.album, {eager: true})
     artist:ArtistEntity;
 
     @CreateDateColumn()

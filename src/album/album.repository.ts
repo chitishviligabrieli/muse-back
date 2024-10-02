@@ -30,11 +30,18 @@ export class AlbumRepository {
     return await this.albumRepository.save(newAlbum);
   }
 
-  async findAll() {
-    return await this.albumRepository
+  async findAll(search?: string) {
+    const queryBuilder = this.albumRepository
       .createQueryBuilder('album')
-      .leftJoinAndSelect('album.music','music')
-      .getMany();
+      .leftJoinAndSelect('album.music', 'music')
+      .leftJoinAndSelect('album.artist', 'artist');
+
+    if (search) {
+      queryBuilder.where('album.name LIKE :search', { search: `%${search}%` });
+    }
+
+    const albums = await queryBuilder.getMany();
+    return albums;
   }
 
   async findOne(id: number) {

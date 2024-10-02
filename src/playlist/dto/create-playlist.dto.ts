@@ -11,5 +11,5 @@ export class CreatePlaylistDto {
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => CreateMusicDto)
-  musics: CreateMusicDto[];
+  music: CreateMusicDto[];
 }
