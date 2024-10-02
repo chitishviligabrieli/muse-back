@@ -18,10 +18,10 @@ export class PlaylistRepository {
   }
 
   async findAll() {
-    return await this.playlistRepository
-      .createQueryBuilder('playlist')
-      .leftJoinAndSelect('user.playlist', 'user')
-      .getMany()
+    return await this.playlistRepository.find()
+      // .createQueryBuilder('playlist')
+      // .leftJoinAndSelect('user.playlist', 'user')
+      // .getMany()
   }
 
   async findOne(id: number){
