@@ -5,4 +5,7 @@ export class CreatePlaylistDto {
   @IsString()
   @IsNotEmpty()
   name: string
+
+  @IsNumber()
+  userId: number
 }

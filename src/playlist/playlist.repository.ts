@@ -5,7 +5,6 @@ import { Repository } from 'typeorm';
 import { CreateMusicDto } from '../music/dto/create-music.dto';
 import { PlaylistEntity } from './entities/playlist.entity';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
-import { ArtistEntity } from '../artist/entities/artist.entity';
 import { UpdateArtistDto } from '../artist/dto/update-artist.dto';
 
 @Injectable()
@@ -18,11 +17,14 @@ export class PlaylistRepository {
     return await this.playlistRepository.save(playlist);
   }
 
-  async findAll(): Promise<PlaylistEntity[]> {
-    return await this.playlistRepository.find();
+  async findAll() {
+    return await this.playlistRepository
+      .createQueryBuilder('playlist')
+      .leftJoinAndSelect('user.playlist', 'user')
+      .getMany()
   }
 
-  async findOne(id: number): Promise<PlaylistEntity> {
+  async findOne(id: number){
     return await this.playlistRepository.findOne({ where: { id } });
   }
 

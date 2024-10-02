@@ -1,7 +1,5 @@
 import { Injectable } from '@nestjs/common';
 import { Admin } from '../auth/decorators/is-admin.decorator';
-import { CreateAlbumDto } from '../album/dto/create-album.dto';
-import { UpdateAlbumDto } from '../album/dto/update-album.dto';
 import { PlaylistRepository } from './playlist.repository';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';

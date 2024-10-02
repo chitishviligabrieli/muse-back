@@ -24,6 +24,8 @@ export class AlbumRepository {
       albumImg: albumImg
     });
 
+    console.log(createAlbumDto, "createAlbumDtorepository");
+
     console.log(newAlbum, "reeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeepository")
     return await this.albumRepository.save(newAlbum);
   }

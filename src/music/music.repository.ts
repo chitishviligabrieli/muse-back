@@ -4,16 +4,17 @@ import { CreateMusicDto } from "./dto/create-music.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UpdateMusicDto } from "./dto/update-music.dto";
 import { Injectable, Search } from '@nestjs/common';
+import * as mp3Duration from 'mp3-duration';
 
 @Injectable()
 export class MusicRepository {
   constructor(@InjectRepository(MusicEntity)
               private readonly musicRepository: Repository<MusicEntity>) { }
 
-  async create(createMusicDto: CreateMusicDto, musicUrl: string) :Promise<MusicEntity> {
+  async create(createMusicDto: CreateMusicDto, musicSrc: string) :Promise<MusicEntity> {
     const newMusic = this.musicRepository.create({
       ...createMusicDto,
-      src: musicUrl
+      musicSrc: musicSrc,
     });
       return await this.musicRepository.save(newMusic);
   }
