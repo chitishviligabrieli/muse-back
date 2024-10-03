@@ -5,6 +5,7 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Admin } from '../auth/decorators/is-admin.decorator';
 import { RolesGuard } from '../auth/guard/roles.guard';
+import { UpdateAlbumDto } from '../album/dto/update-album.dto';
 
 @Controller('user')
 export class UserController {
@@ -32,6 +33,16 @@ export class UserController {
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.update(+id, updateUserDto);
+  }
+
+  @Patch('block/:id')
+  block(@Param('id') id: string) {
+    return this.userService.block(+id);
+  }
+
+  @Patch('unblock/:id')
+  unblock(@Param('id') id: string) {
+    return this.userService.unBlock(+id);
   }
 
   @Delete(':id')

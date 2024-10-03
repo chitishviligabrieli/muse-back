@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from './entities/user.entity';
 import { Repository } from 'typeorm';
@@ -67,6 +67,24 @@ export class UserRepository {
 
   findByEmailAndPassword(email: string) {
     return this.userRepository.findOne({ where: { email: email }, select: { email: true, password: true, role: true, blocked: true, id: true } });
+  }
+
+  async block(id: number) {
+    const user = await this.userRepository.findOneBy( { id });
+    if (!user) {
+      throw new NotFoundException('User is blocked');
+    }
+    user.blocked = true;
+    return this.userRepository.save(user);
+  }
+
+  async unBlock(id: number) {
+    const user = await this.userRepository.findOneBy( { id });
+    if (!user) {
+      throw new NotFoundException('user unblocked');
+    }
+    user.blocked = false;
+    return this.userRepository.save(user);
   }
 
   async remove(id: number) {

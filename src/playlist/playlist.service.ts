@@ -49,8 +49,14 @@ export class PlaylistService {
     // return this.playlistRepository.a
     // return this.playlistRepository.addMusic(playlist, music);
   }
+  async rename(playlistId: number, updatePlaylistDto: UpdatePlaylistDto) {
+    return await this.playlistRepository.rename(playlistId, updatePlaylistDto);
 
-  async deleteMusic(id: number, playlistId: number, musicId: number): Promise<PlaylistEntity> {
-    return this.playlistRepository.deleteMusic(playlistId, id, musicId);
+  }
+
+  async deleteMusic(userId: number, playlistId: number, musicId: number): Promise<PlaylistEntity> {
+  console.log(userId, playlistId, musicId);
+    return this.playlistRepository.deleteMusic(userId, playlistId, musicId);
+
   }
 }

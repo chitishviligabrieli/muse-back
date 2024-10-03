@@ -51,6 +51,14 @@ export class UserService {
     return updatedUser
   }
 
+  block(id:number){
+    return this.userRepository.block(id)
+  }
+
+  unBlock(id:number){
+    return this.userRepository.unBlock(id)
+  }
+
   async remove(id: number) {
     return await this.userRepository.remove(id);
   }

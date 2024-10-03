@@ -54,6 +54,12 @@ export class PlaylistController {
     return this.playlistService.remove(+id, +playlist);
   }
 
+  @Patch('/rename/:id')
+  rename(@Param('playlistId') playlistId: number, @Body () updatePlaylistDto: UpdatePlaylistDto, @Req() req) {
+    const playlist = Number(req.params.playlistId);
+    return this.playlistService.rename( playlist, updatePlaylistDto );
+  }
+
   @Patch('/add/:id/:playlist/:music')
   async addMusic(@Param('id') id: number, @Param('music') music: number, @Param('playlist') playlist: number, @Req() req) {
     let userId: number;
@@ -66,14 +72,17 @@ console.log(music , 'musicc')
     return await this.playlistService.addMusic(playlist ,userId , music);
   }
 
-  @Delete('/add/:id/:playlistId/:musicId')
+  @Delete('/add/:id/:playlist/:music')
   async deleteMusic(
     @Param('id') id: number,
-    @Param('musicId') musicId: number,
-    @Param('playlistId') playlistId: number,
+    @Param('music') music: number,
+    @Param('playlist') playlist: number,
     @Req() req,
   ) {
-    console.log(req.params, 'playlistId');
-    return this.playlistService.deleteMusic(id, musicId, playlistId);
+    const userId = Number(req.params.id)
+    const musicId = Number(req.params.music)
+    const playlistId = Number(req.params.playlist)
+    console.log(userId, musicId, playlistId, ' playlist');
+    return this.playlistService.deleteMusic(userId, musicId, playlistId);
   }
 }
