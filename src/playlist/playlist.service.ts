@@ -4,11 +4,14 @@ import { PlaylistRepository } from './playlist.repository';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
 import { PlaylistEntity } from './entities/playlist.entity';
+import { MusicRepository } from '../music/music.repository';
 
 @Injectable()
 export class PlaylistService {
 
-  constructor(private readonly playlistRepository: PlaylistRepository) {
+  constructor(private readonly playlistRepository: PlaylistRepository,
+              private readonly musicRepository: MusicRepository,
+              ) {
   }
 
   @Admin()
@@ -30,14 +33,21 @@ export class PlaylistService {
   }
 
   // @Admin()
-  async remove(id: number, userId: number) {
+  async remove(id: number, userId: number ) {
     return await this.playlistRepository.remove(id, userId);
   }
 
-  async addMusic(playlistId: number, userId: number, musicId: number): Promise<PlaylistEntity> {
-    const playlist = await this.playlistRepository.findOne(userId, playlistId);
-    console.log(playlist, 'playlist');
-    return this.playlistRepository.addMusic(playlistId, musicId);
+  async addMusic(playlistId: number, userId: number, music: number): Promise<PlaylistEntity> {
+
+    // const asdasd= Number(userId)
+    // const playlist = await this.playlistRepository.findOne(userId, playlistId);
+    // const newMusic = await this.musicRepository.findOne(musicId)
+    // playlist.music.push(newMusic)
+    return await this.playlistRepository.addMusic(playlistId, userId, music)
+
+    // return this.playlistRepository.newMusic
+    // return this.playlistRepository.a
+    // return this.playlistRepository.addMusic(playlist, music);
   }
 
   async deleteMusic(id: number, playlistId: number, musicId: number): Promise<PlaylistEntity> {

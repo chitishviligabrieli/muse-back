@@ -10,6 +10,7 @@ import { MusicRepository } from '../music/music.repository';
 import { Playlist } from 'aws-sdk/clients/elastictranscoder';
 import { UserEntity } from '../user/entities/user.entity';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
+import { PlaylistService } from './playlist.service';
 
 @Injectable()
 export class PlaylistRepository {
@@ -52,39 +53,50 @@ export class PlaylistRepository {
 
 
   async remove(id: number, userId : number): Promise<void> {
-    console.log(id, userId)
-    const rame = await this.playlistRepository.createQueryBuilder('playlist')
-      .softDelete()
-      .where("id = :id", { id })
-      .andWhere("userId = :userId", { userId })
-      .execute();
-    console.log(rame)
+    console.log(id, ' akk');
+
+     await this.playlistRepository.softDelete({ id } )
   }
 
 
-  async addMusic(id: number, musicId: number): Promise<PlaylistEntity> {
-    const playlist  = await this.playlistRepository.findOne({
-      where: { id },
-      relations: ['music'],
+  async addMusic(userId: number, playlistId: number, music: number): Promise<PlaylistEntity> {
+    console.log(music);
+    const playlist = await this.playlistRepository.findOne({
+      where: { id: playlistId },
+      relations: {
+        music: true
+      },
     });
+    const newMusic = await this.musicrepository.findOne(music)
+    playlist.music.push(newMusic)
 
-    const music = await this.musicrepository.findOne(musicId);
-    if (!playlist) {
-      throw new Error('Playlist not found');
+    const isMusicInPlaylist = playlist.music.some((m) => m.id === music);
+    if (!isMusicInPlaylist) {
+        playlist.music.push(newMusic);
+        await this.playlistRepository.save(playlist);
+
     }
 
-    if (!music) {
-      throw new Error('Music not found');
-    }
+    return await this.playlistRepository.save(playlist);
 
-    const hasMusic = playlist.music.some(m => m.id === musicId);
 
-    if (!hasMusic) {
-      playlist.music.push(music);
-      return await this.playlistRepository.save(playlist);
-    } else {
-      throw  new HttpException('Music already exists in the playlist' , HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+    // const music = await this.musicrepository.findOne(musicId);
+    // if (!playlist) {
+    //   throw new Error('Playlist not found');
+    // }
+    //
+    // if (!music) {
+    //   throw new Error('Music not found');
+    // }
+    //
+    // const hasMusic = playlist.music.some(m => m.id === musicId);
+    //
+    // if (!hasMusic) {
+    //   playlist.music.push(music);
+    //   return await this.playlistRepository.save(playlist);
+    // } else {
+    //   throw  new HttpException('Music already exists in the playlist' , HttpStatus.INTERNAL_SERVER_ERROR);
+    // }
   }
 
   async deleteMusic(id: number, playlistId: number, musicId: number): Promise<PlaylistEntity> {

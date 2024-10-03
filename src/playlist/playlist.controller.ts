@@ -17,20 +17,21 @@ import { UpdatePlaylistDto } from './dto/update-playlist.dto';
 
 @Controller('playlist')
 export class PlaylistController {
-  constructor(private readonly playlistService: PlaylistService) {}
+  constructor(private readonly playlistService: PlaylistService) {
+  }
 
   @Post(':userId')
-  create(@Param(':userId') userId: any ,@Body() createPlaylistDto: CreatePlaylistDto, @Req() req ) {
+  create(@Param(':userId') userId: any, @Body() createPlaylistDto: CreatePlaylistDto, @Req() req) {
 
     const user = Number(req.params.userId);
 
-    console.log(user, "user")
+    console.log(user, 'user');
 
-    return this.playlistService.create(createPlaylistDto,user);
+    return this.playlistService.create(createPlaylistDto, user);
   }
 
   @Get(':userId')
-  findAll(@Param('userId')userId: number) {
+  findAll(@Param('userId') userId: number) {
     return this.playlistService.findAll(userId);
   }
 
@@ -47,23 +48,32 @@ export class PlaylistController {
   @Delete(':id/:playlistId')
   remove(@Param('id') id: string, @Param('playlistId') playlistId: number, @Req() req) {
     const playlist = Number(req.params.playlistId);
-    console.log(playlist, " playist");
+    // console.log(playlist, ' playist');
     const userId = Number(req.params.id);
     console.log(userId, 'userId');
     return this.playlistService.remove(+id, +playlist);
   }
 
-  @Post('/add/:id/:playlistId/:musicId')
-  async addMusic(@Param('id') id: number, @Param('musicId') musicId: number, @Param('playlistId') playlistId: number ) {
-    return this.playlistService.addMusic(id, playlistId, musicId);
+  @Patch('/add/:id/:playlist/:music')
+  async addMusic(@Param('id') id: number, @Param('music') music: number, @Param('playlist') playlist: number, @Req() req) {
+    let userId: number;
+    userId = Number(req.params.id);
+    const musicId = Number(req.params.musicId)
+    const playlistId = Number(req.params.playlistId);
+console.log(music , 'musicc')
+    console.log(playlist , 'playlistt')
+    console.log(userId, music, playlist, ' playlist');
+    return await this.playlistService.addMusic(playlist ,userId , music);
   }
 
   @Delete('/add/:id/:playlistId/:musicId')
   async deleteMusic(
     @Param('id') id: number,
     @Param('musicId') musicId: number,
-    @Param('playlistId') playlistId: number
+    @Param('playlistId') playlistId: number,
+    @Req() req,
   ) {
+    console.log(req.params, 'playlistId');
     return this.playlistService.deleteMusic(id, musicId, playlistId);
   }
 }
