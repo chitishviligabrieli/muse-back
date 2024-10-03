@@ -54,9 +54,12 @@ export class PlaylistController {
     return this.playlistService.remove(+id, +playlist);
   }
 
-  @Patch('/rename/:id')
-  rename(@Param('playlistId') playlistId: number, @Body () updatePlaylistDto: UpdatePlaylistDto, @Req() req) {
-    const playlist = Number(req.params.playlistId);
+  @Patch('/rename/:playlistId')
+  rename(@Param('id') id: number, @Body () updatePlaylistDto: UpdatePlaylistDto, @Req() req) {
+    console.log(req.params,'params');
+    console.log(id)
+    const playlist = Number(req.params.id);
+    console.log(playlist ,updatePlaylistDto, 'controler')
     return this.playlistService.rename( playlist, updatePlaylistDto );
   }
 

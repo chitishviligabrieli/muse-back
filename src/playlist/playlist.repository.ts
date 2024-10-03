@@ -109,6 +109,7 @@ export class PlaylistRepository {
   async rename (playlistId: number, updatePlaylistDto: UpdatePlaylistDto): Promise<PlaylistEntity> {
     const playlist = await this.playlistRepository.findOneBy({ id: playlistId })
     playlist.name = updatePlaylistDto.name
+    console.log(playlist.name, playlist, updatePlaylistDto, 'changed')
     return this.playlistRepository.save(playlist);
   }
 
@@ -125,7 +126,7 @@ export class PlaylistRepository {
 
     const updatedPlaylist = {
       ...existingPlaylist,
-      playlistName: updatePlaylistDto.name ?? existingPlaylist.name,
+      name: updatePlaylistDto.name ?? existingPlaylist.name,
 
       music: music.length > 0 ? music : existingPlaylist.music,
     };

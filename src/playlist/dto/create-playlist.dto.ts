@@ -6,9 +6,4 @@ import { Type } from 'class-transformer';
 export class CreatePlaylistDto {
   @IsString()
   name!: string
-
-  // @IsArray()
-  // @ValidateNested({ each: true })
-  // @Type(() => CreateMusicDto)
-  // music: CreateMusicDto[];
 }
