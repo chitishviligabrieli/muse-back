@@ -44,9 +44,13 @@ export class PlaylistController {
     return this.playlistService.update(+id, +playlistId, updatePlaylistDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.playlistService.remove(+id);
+  @Delete(':id/:playlistId')
+  remove(@Param('id') id: string, @Param('playlistId') playlistId: number, @Req() req) {
+    const playlist = Number(req.params.playlistId);
+    console.log(playlist, " playist");
+    const userId = Number(req.params.id);
+    console.log(userId, 'userId');
+    return this.playlistService.remove(+id, +playlist);
   }
 
   @Post('/add/:id/:playlistId/:musicId')
@@ -54,11 +58,12 @@ export class PlaylistController {
     return this.playlistService.addMusic(id, playlistId, musicId);
   }
 
-  @Delete(':id/add/:musicId')
+  @Delete('/add/:id/:playlistId/:musicId')
   async deleteMusic(
     @Param('id') id: number,
     @Param('musicId') musicId: number,
+    @Param('playlistId') playlistId: number
   ) {
-    return this.playlistService.deleteMusic(id, musicId);
+    return this.playlistService.deleteMusic(id, musicId, playlistId);
   }
 }

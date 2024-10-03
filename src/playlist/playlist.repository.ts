@@ -51,9 +51,16 @@ export class PlaylistRepository {
 
 
 
-  async remove(id: number): Promise<void> {
-    await this.playlistRepository.softDelete(id);
+  async remove(id: number, userId : number): Promise<void> {
+    console.log(id, userId)
+    const rame = await this.playlistRepository.createQueryBuilder('playlist')
+      .softDelete()
+      .where("id = :id", { id })
+      .andWhere("userId = :userId", { userId })
+      .execute();
+    console.log(rame)
   }
+
 
   async addMusic(id: number, musicId: number): Promise<PlaylistEntity> {
     const playlist  = await this.playlistRepository.findOne({
@@ -80,7 +87,7 @@ export class PlaylistRepository {
     }
   }
 
-  async deleteMusic(id: number, musicId: number): Promise<PlaylistEntity> {
+  async deleteMusic(id: number, playlistId: number, musicId: number): Promise<PlaylistEntity> {
     const playlist = await this.playlistRepository.findOne({
       where: { id },
       relations: ['music'],

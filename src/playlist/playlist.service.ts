@@ -4,8 +4,6 @@ import { PlaylistRepository } from './playlist.repository';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
 import { PlaylistEntity } from './entities/playlist.entity';
-import { UserRepository } from '../user/user.repository';
-import { UserService } from '../user/user.service';
 
 @Injectable()
 export class PlaylistService {
@@ -31,18 +29,18 @@ export class PlaylistService {
     return await this.playlistRepository.update(id, playlistId, updatePlaylistDto);
   }
 
-  @Admin()
-  async remove(id: number) {
-    return await this.playlistRepository.remove(id);
+  // @Admin()
+  async remove(id: number, userId: number) {
+    return await this.playlistRepository.remove(id, userId);
   }
 
-  async addMusic(playlistId: number, userId: number,  musicId: number): Promise<PlaylistEntity> {
+  async addMusic(playlistId: number, userId: number, musicId: number): Promise<PlaylistEntity> {
     const playlist = await this.playlistRepository.findOne(userId, playlistId);
     console.log(playlist, 'playlist');
     return this.playlistRepository.addMusic(playlistId, musicId);
   }
 
-  async deleteMusic(playlistId: number, musicId: number): Promise<PlaylistEntity> {
-    return this.playlistRepository.deleteMusic(playlistId, musicId);
+  async deleteMusic(id: number, playlistId: number, musicId: number): Promise<PlaylistEntity> {
+    return this.playlistRepository.deleteMusic(playlistId, id, musicId);
   }
 }
