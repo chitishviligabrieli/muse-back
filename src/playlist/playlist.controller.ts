@@ -19,12 +19,14 @@ import { UpdatePlaylistDto } from './dto/update-playlist.dto';
 export class PlaylistController {
   constructor(private readonly playlistService: PlaylistService) {}
 
-  @Post()
-  create(@Body() createPlaylistDto: CreatePlaylistDto, @Req() req ) {
+  @Post(':userId')
+  create(@Param(':userId') userId: any ,@Body() createPlaylistDto: CreatePlaylistDto, @Req() req ) {
 
-    const userId = req.user.id;
+    const user = Number(req.params.userId);
 
-    return this.playlistService.create(createPlaylistDto, userId);
+    console.log(user, "user")
+
+    return this.playlistService.create(createPlaylistDto,user);
   }
 
   @Get(':userId')

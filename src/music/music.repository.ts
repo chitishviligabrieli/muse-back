@@ -3,9 +3,7 @@ import { MusicEntity } from "./entities/music.entity";
 import { CreateMusicDto } from "./dto/create-music.dto";
 import { InjectRepository } from "@nestjs/typeorm";
 import { UpdateMusicDto } from "./dto/update-music.dto";
-import { Injectable, Search } from '@nestjs/common';
-import * as mp3Duration from 'mp3-duration';
-
+import { Injectable, Search } from '@nestjs/common'
 @Injectable()
 export class MusicRepository {
   constructor(@InjectRepository(MusicEntity)
@@ -29,7 +27,6 @@ export class MusicRepository {
   async findAll() {
     return await this.musicRepository
       .createQueryBuilder('music')
-      // .where('music.artistId= : artistId' )
       .getMany();
   }
 

@@ -4,6 +4,8 @@ import { PlaylistRepository } from './playlist.repository';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
 import { PlaylistEntity } from './entities/playlist.entity';
+import { UserRepository } from '../user/user.repository';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class PlaylistService {

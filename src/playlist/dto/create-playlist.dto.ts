@@ -5,8 +5,7 @@ import { Type } from 'class-transformer';
 
 export class CreatePlaylistDto {
   @IsString()
-  @IsNotEmpty()
-  name: string
+  name!: string
 
   // @IsArray()
   // @ValidateNested({ each: true })

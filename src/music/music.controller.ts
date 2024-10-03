@@ -46,7 +46,10 @@ export class MusicController {
 
   @Get()
   async findAll() {
+    console.log(this.musicService.findAll())
     return await this.musicService.findAll();
+
+
   }
 
   @Get(':id')
