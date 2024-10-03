@@ -29,6 +29,7 @@ export class MusicRepository {
   async findAll() {
     return await this.musicRepository
       .createQueryBuilder('music')
+      .where('music.artistId= : artistId')
       .getMany();
   }
 

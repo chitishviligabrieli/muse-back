@@ -17,6 +17,9 @@ export class PlaylistEntity {
   @Column({ type: 'varchar' })
   name: string;
 
+  @Column({ type: 'int' })
+  userId: number;
+
   @ManyToMany(() => MusicEntity, (music) => music.playlists)
   music: MusicEntity[];
 

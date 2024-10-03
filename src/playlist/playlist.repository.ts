@@ -24,14 +24,15 @@ export class PlaylistRepository {
     ): Promise<PlaylistEntity> {
     const newPlaylist = this.playlistRepository.create({
       name: createPlaylistDto.name,
-      music: createPlaylistDto.music || [],
+      // music: createPlaylistDto.music || [],
       user: {id: userId}
     });
     return await this.playlistRepository.save(newPlaylist);
   }
 
-  async findAll(): Promise<PlaylistEntity[]> {
+  async findAll(userId: number): Promise<PlaylistEntity[]> {
     return await this.playlistRepository.createQueryBuilder('playlist')
+      .where('playlist.userId = :userId', {userId})
       .leftJoinAndSelect('playlist.music', 'music')
       .leftJoinAndSelect('music.artist', 'artist')
       .leftJoinAndSelect('playlist.user', 'user')

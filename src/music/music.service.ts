@@ -20,8 +20,9 @@ export class MusicService {
     return await this.musicRepository.create(createMusicDto, uploadMusic.url)
   }
 
-  async findAll() {
-    return await this.musicRepository.findAll();
+  async findAll(search?: string): Promise<Partial<MusicEntity>[]> {
+    const musicList = await this.musicRepository.findAll();
+    return musicList.map(({ albumId, artistId, ...music }) => music);
   }
 
   async findOne(id: number) {

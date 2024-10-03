@@ -16,8 +16,8 @@ export class PlaylistService {
     return await this.playlistRepository.create(createPlaylistDto, userId);
   }
 
-  async findAll() {
-    return await this.playlistRepository.findAll();
+  async findAll(userId: number): Promise<PlaylistEntity[]> {
+    return await this.playlistRepository.findAll(userId);
   }
 
   async findOne(id: number) {

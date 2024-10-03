@@ -8,8 +8,8 @@ export class CreatePlaylistDto {
   @IsNotEmpty()
   name: string
 
-  @IsArray()
-  @ValidateNested({ each: true })
-  @Type(() => CreateMusicDto)
-  music: CreateMusicDto[];
+  // @IsArray()
+  // @ValidateNested({ each: true })
+  // @Type(() => CreateMusicDto)
+  // music: CreateMusicDto[];
 }

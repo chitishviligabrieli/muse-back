@@ -1,4 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, Req, UnauthorizedException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Res,
+  Req,
+  UnauthorizedException,
+  Query,
+} from '@nestjs/common';
 import { PlaylistService } from './playlist.service';
 import { CreatePlaylistDto } from './dto/create-playlist.dto';
 import { UpdatePlaylistDto } from './dto/update-playlist.dto';
@@ -15,9 +27,9 @@ export class PlaylistController {
     return this.playlistService.create(createPlaylistDto, userId);
   }
 
-  @Get()
-  findAll() {
-    return this.playlistService.findAll();
+  @Get(':userId')
+  findAll(@Param('userId')userId: number) {
+    return this.playlistService.findAll(userId);
   }
 
   @Get(':id')
