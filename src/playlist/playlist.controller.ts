@@ -49,9 +49,9 @@ export class PlaylistController {
     return this.playlistService.remove(+id);
   }
 
-  @Post('/add/:id/musicId')
-  async addMusic(@Param('id') id: number, @Param('musicId') musicId: number) {
-    return this.playlistService.addMusic(id, musicId);
+  @Post('/add/:id/:playlistId/:musicId')
+  async addMusic(@Param('id') id: number, @Param('musicId') musicId: number, @Param('playlistId') playlistId: number ) {
+    return this.playlistService.addMusic(id, playlistId, musicId);
   }
 
   @Delete(':id/add/:musicId')

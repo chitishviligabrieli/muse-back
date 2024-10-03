@@ -36,7 +36,9 @@ export class PlaylistService {
     return await this.playlistRepository.remove(id);
   }
 
-  async addMusic(playlistId: number, musicId: number): Promise<PlaylistEntity> {
+  async addMusic(playlistId: number, userId: number,  musicId: number): Promise<PlaylistEntity> {
+    const playlist = await this.playlistRepository.findOne(userId, playlistId);
+    console.log(playlist, 'playlist');
     return this.playlistRepository.addMusic(playlistId, musicId);
   }
 
