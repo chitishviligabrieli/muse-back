@@ -14,6 +14,7 @@ export class MusicRepository {
       ...createMusicDto,
       musicSrc: musicSrc,
     });
+    console.log(newMusic, "newmusic service")
       return await this.musicRepository.save(newMusic);
   }
 

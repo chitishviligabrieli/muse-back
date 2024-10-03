@@ -47,8 +47,8 @@ export class UserService {
       throw new NotFoundException('User not found');
     }
 
-    const updatedUser = await this.userRepository.updateUser(id, updateUserDto);
-    return updatedUser
+    let updateUser = await this.userRepository.updateUser(id, updateUserDto);
+    return updateUser
   }
 
   block(id:number){
