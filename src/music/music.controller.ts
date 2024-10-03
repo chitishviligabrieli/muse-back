@@ -29,6 +29,7 @@ export class MusicController {
     @Body() createMusicDto: CreateMusicDto,
     @UploadedFiles() files: {
       music: Express.Multer.File },
+      musicImg: Express.Multer.File,
     @Req() req) {
 
     const { name, duration, albumId } = req.body;
