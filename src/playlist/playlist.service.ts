@@ -22,13 +22,13 @@ export class PlaylistService {
     return await this.playlistRepository.findAll(userId);
   }
 
-  async findOne(id: number) {
-    return await this.playlistRepository.findOne(id);
+  async findOne(id: number, playlistId: number) {
+    return await this.playlistRepository.findOne(id, playlistId);
   }
 
   @Admin()
-  async update(id: number, updatePlaylistDto: UpdatePlaylistDto) {
-    return await this.playlistRepository.update(id, updatePlaylistDto);
+  async update(id: number, playlistId: number, updatePlaylistDto: UpdatePlaylistDto) {
+    return await this.playlistRepository.update(id, playlistId, updatePlaylistDto);
   }
 
   @Admin()

@@ -66,7 +66,7 @@ export class UserRepository {
   }
 
   findByEmailAndPassword(email: string) {
-    return this.userRepository.findOne({ where: { email: email }, select: { email: true, password: true, role: true, blocked: true } });
+    return this.userRepository.findOne({ where: { email: email }, select: { email: true, password: true, role: true, blocked: true, id: true } });
   }
 
   async remove(id: number) {

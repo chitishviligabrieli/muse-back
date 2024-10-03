@@ -39,7 +39,7 @@ export class PlaylistRepository {
       .getMany()
   }
 
-  async findOne(userId: number): Promise<PlaylistEntity> {
+  async findOne(userId: number, playlistId: number): Promise<PlaylistEntity> {
     const playlist = await this.playlistRepository.createQueryBuilder('playlist')
       .leftJoinAndSelect('playlist.music', 'music')
       .leftJoinAndSelect('music.artist', 'artist')
@@ -103,10 +103,11 @@ export class PlaylistRepository {
 
   async update(
     id: number,
+    playlistId: number,
     updatePlaylistDto: UpdatePlaylistDto,
     music: MusicEntity[] = [],
   ): Promise<PlaylistEntity> {
-    const existingPlaylist = await this.findOne(id);
+    const existingPlaylist = await this.findOne(id, playlistId);
     if (!existingPlaylist) {
       throw new Error('Playlist not found');
     }

@@ -34,14 +34,14 @@ export class PlaylistController {
     return this.playlistService.findAll(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.playlistService.findOne(+id);
+  @Get(':userId/:playlistId')
+  findOne(@Param('userId') id: string, @Param('playlistId') playlistId: number) {
+    return this.playlistService.findOne(+id, +playlistId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updatePlaylistDto: UpdatePlaylistDto) {
-    return this.playlistService.update(+id, updatePlaylistDto);
+  @Patch(':id/:playlistId')
+  update(@Param('id') id: string, @Param('playlistId') playlistId: number, @Body() updatePlaylistDto: UpdatePlaylistDto) {
+    return this.playlistService.update(+id, +playlistId, updatePlaylistDto);
   }
 
   @Delete(':id')
@@ -49,7 +49,7 @@ export class PlaylistController {
     return this.playlistService.remove(+id);
   }
 
-  @Post(':id/add/:musicId')
+  @Post('/add/:id/musicId')
   async addMusic(@Param('id') id: number, @Param('musicId') musicId: number) {
     return this.playlistService.addMusic(id, musicId);
   }
