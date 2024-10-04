@@ -24,30 +24,33 @@ export class MusicController {
 
   @Admin()
   @Post()
-  @UseInterceptors(FileFieldsInterceptor([{name:"music", maxCount: 1}]))
+  @UseInterceptors(FileFieldsInterceptor([{ name: 'music', maxCount: 1 }]))
   async create(
     @Body() createMusicDto: CreateMusicDto,
     @UploadedFiles() files: {
-      music: Express.Multer.File },
-      musicImg: Express.Multer.File,
+      music: Express.Multer.File
+    },
+    musicImg: Express.Multer.File,
     @Req() req) {
 
-    const { name, duration, albumId } = req.body;
+    const { name, duration, albumId, artistId } = req.body;
 
-    const id = req.body.albumId
+    const id = req.body.albumId;
+    const artist = req.body.artistId;
 
-    req.body.albumId = Number(id)
+    req.body.albumId = Number(id);
+    req.body.artistId = Number(artist);
 
     if (!files) {
       throw new Error('No file uploaded. Check if the field in Postman is "music".');
     }
-    console.log(createMusicDto , 'createmUisccccccccccccccccccc')
+    console.log(createMusicDto, 'createmUisccccccccccccccccccc');
     return await this.musicService.create(createMusicDto, req.user, files.music[0]);
   }
 
   @Get()
   async findAll() {
-    console.log(this.musicService.findAll())
+    console.log(this.musicService.findAll());
     return await this.musicService.findAll();
 
 

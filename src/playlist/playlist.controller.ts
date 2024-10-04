@@ -35,6 +35,11 @@ export class PlaylistController {
     return this.playlistService.findAll(userId);
   }
 
+  @Get(':playlistId')
+  findPlaylist(@Param('playlistId') playlistId: number) {
+
+  }
+
   @Get(':userId/:playlistId')
   findOne(@Param('userId') id: string, @Param('playlistId') playlistId: number) {
     return this.playlistService.findOne(+id, +playlistId);
