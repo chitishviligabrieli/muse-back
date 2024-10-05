@@ -38,11 +38,11 @@ export class MusicController {
     const id = req.body.albumId;
     const artist = req.body.artistId;
 
-    console.log(files.music[0].originalname);
+
     function randomFileName(length: number): string {
       const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
       let result = '';
-      for (let i = 0; i < length; i++) {
+      for (let i = 0; i < characters.length; i++) {
         const randomIndex = Math.floor(Math.random() * characters.length);
         result += characters[randomIndex];
       }
@@ -51,8 +51,12 @@ export class MusicController {
 
     let rendomfile = randomFileName(files.music[0].originalname);
 
+    files.music[0].originalname = rendomfile;
+
     req.body.albumId = Number(id);
     req.body.artistId = Number(artist);
+
+    console.log(files.music[0]);
 
     if (!files) {
       throw new Error('No file uploaded. Check if the field in Postman is "music".');
