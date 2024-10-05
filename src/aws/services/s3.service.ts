@@ -1,56 +1,61 @@
 import { Injectable } from "@nestjs/common";
-import * as AWS from "aws-sdk";
+import * as AWS from "aws-sdk"
+
+
 
 @Injectable()
-export class S3Service {
-    private s3Client: AWS.S3;
-    private bucketName: string;
 
-    constructor() {
+export class S3Service{
+    private s3Client:AWS.S3;
+    private bucketName:string
+
+    constructor(){
         this.s3Client = new AWS.S3({
-            accessKeyId: process.env.AWS_ACCESS_KEY,
-            secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-            region: 'eu-north-1',
-            signatureVersion: 'v4'
-        });
+            accessKeyId:process.env.AWS_ACCESS_KEY,
+            secretAccessKey:process.env.AWS_SECRET_ACCESS_KEY,
+            region:'eu-north-1',
+            signatureVersion:'v4'
+        })
 
-        this.bucketName = process.env.AWS_BUCKET_NAME;
+        this.bucketName = process.env.AWS_BUCKET_NAME
     }
 
-    async upload(file: Express.Multer.File, key: string) {
-        const buffer = file.buffer;
+    async upload(file:Express.Multer.File,key:string){
 
-        // Encode the file key
-        const fileKey = encodeURIComponent(key);
+        const buffer = file.buffer
+
+        const fileKey = key
         const params = {
             Bucket: this.bucketName,
             Key: String(fileKey),
             Body: buffer,
             ContentType: file.mimetype,
-            ContentDisposition: 'inline', // Change as necessary
+            ContentDisposition: 'inline',
         };
 
         try {
             return await this.s3Client.upload(params).promise();
         } catch (e) {
-            console.error('Error uploading file to S3:', e);
-            throw new Error('File upload failed: ' + e.message);
+            console.error('Error uploading file to S3:', e.message);
+            throw new Error('File upload failed');
         }
+
+
     }
 
-    async getPresignedUrl(key: string, bucket?: string): Promise<string> {
+    async getPresignedUrl(key: string,bucket?:string): Promise<string> {
         const params = {
             Bucket: bucket || this.bucketName,
             Key: key,
-            Expires: 3600, // Set to 1 hour for example
+            Expires: 111111111113600,
         };
 
         try {
             const url = await this.s3Client.getSignedUrlPromise('getObject', params);
             return url;
         } catch (error) {
-            console.error('Error generating presigned URL:', error);
-            throw new Error('Failed to generate presigned URL: ' + error.message);
+            throw error;
         }
     }
+
 }
