@@ -44,12 +44,7 @@ export class AlbumRepository {
     return albums;
   }
 
-  // async findOne(id: number) {
-  //   return await this.albumRepository.findOne(id)
-  //     // .createQueryBuilder('album')
-  //     // .where('album.id= :id', { id })
-  //     // .getOne();
-  // }
+
 
   async update(id: number, updateAlbumDto: UpdateAlbumDto) {
     await this.albumRepository

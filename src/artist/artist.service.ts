@@ -6,11 +6,13 @@ import { ArtistEntity } from './entities/artist.entity';
 import { Admin } from '../auth/decorators/is-admin.decorator';
 import { AlbumRepository } from '../album/album.repository';
 import { FilesService } from '../files/files.service';
+import { AlbumService } from '../album/album.service';
 
 @Injectable()
 export class ArtistService {
   constructor(private readonly artistRepository: ArtistRepository,
               private readonly fileService: FilesService,
+              // private readonly albumService: AlbumService,
   ) {
   }
 
