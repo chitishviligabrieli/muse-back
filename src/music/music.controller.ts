@@ -38,6 +38,19 @@ export class MusicController {
     const id = req.body.albumId;
     const artist = req.body.artistId;
 
+    console.log(files.music[0].originalname);
+    function randomFileName(length: number): string {
+      const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+      let result = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        result += characters[randomIndex];
+      }
+      return result;
+    }
+
+    let rendomfile = randomFileName(files.music[0].originalname);
+
     req.body.albumId = Number(id);
     req.body.artistId = Number(artist);
 
