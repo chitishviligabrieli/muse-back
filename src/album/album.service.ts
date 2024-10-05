@@ -32,7 +32,10 @@ export class AlbumService {
   }
 
   async findOne(id: number) {
-    return await this.albumRepository.findOne(id);
+    const album = await this.albumRepository.findAll();
+    return album.find(album => album.id === id);
+    // console.log(oneAlbum);
+    // return await this.albumRepository.findOne(oneAlbum.id);
   }
 
 

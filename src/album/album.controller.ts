@@ -52,6 +52,7 @@ export class AlbumController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
+    console.log(id)
     return await this.albumService.findOne(+id);
   }
 
